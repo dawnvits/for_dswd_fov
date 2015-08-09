@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Tracking System</title>
+  
+  <%= favicon_link_tag 'favicon.ico' %>
+
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-indigo.min.css" /> 
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+  <style>
+  	.material-icons.md-18 { font-size: 18px; }
+	.material-icons.md-24 { font-size: 24px; }
+	.material-icons.md-36 { font-size: 36px; }
+	.material-icons.md-48 { font-size: 48px; }
+  </style>
+</head>
+<body class="mdl-color--grey-50">
+
+<%= yield %>
+
+</body>
+</html>
