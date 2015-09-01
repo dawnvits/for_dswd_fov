@@ -1,0 +1,48 @@
+<%= render :partial => 'navigation' %>
+
+<div class="ui page grid">
+
+    <div class="ui two column center aligned grid">
+  		<div class="column"data-sr='scale up 20%'>
+
+  			<h2 class="ui icon header">
+			  <i class="settings icon"></i>
+			  <div class="content">
+			    Manage Account Settings
+			  </div>
+			</h2>
+
+    <%= form_for @employee, :html => { :class => "ui form attached fluid segment" } do |f| %>
+          
+          <div class="ui hidden divider"></div>
+
+          <div class="two fields">
+          	<div class="field">
+          		<div class="ui toggle checkbox">
+		      	<%= f.check_box :active %>
+		      	<label>Active</label>
+		    	</div>
+          	</div>
+
+          	<div class="field">
+          		<div class="ui toggle checkbox">
+			      <%= f.check_box :admin %>
+			      <label>Administrator</label>
+		    	</div>
+          	</div>
+          </div>
+
+          <div class="ui hidden divider"></div>
+      	  
+      	  <%= f.submit "Change Settings", :class => 'ui right aligned teal button' %> 
+
+	<% end %>
+
+    	</div>
+    </div><!-- 16 column -->
+</div><!-- grid -->
+
+
+
+
+

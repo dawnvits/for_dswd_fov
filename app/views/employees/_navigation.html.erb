@@ -1,0 +1,17 @@
+<div class="ui right aligned page grid">
+    <div class="sixteen wide column">
+        <div class="ui text menu">
+
+          <%= link_to_unless_current('<i class="chevron left icon"></i> Back'.html_safe, employees_path, :class => 'item') %>
+
+          <%= active_link_to('<i class="add circle icon"></i> New Account'.html_safe, new_employee_path, :class => 'blue item') %> 
+
+          <%= active_link_to('<i class="thumbs outline up icon"></i> Active'.html_safe, active_employees_path, :class => 'blue item') %> 
+
+          <%= active_link_to('<i class="thumbs outline down icon"></i> Inactive'.html_safe, inactive_employees_path, :class => 'blue item') %>
+
+          <%= active_link_to('<i class="star empty icon"></i> Administrators'.html_safe, administrators_employees_path, :class => 'blue item') %>  
+		  
+		</div><!-- ui menu -->
+    </div><!-- 16 column -->
+</div><!-- grid -->

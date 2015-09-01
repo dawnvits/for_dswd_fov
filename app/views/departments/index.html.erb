@@ -1,0 +1,56 @@
+<!-- partial nav -->
+	<%= render :partial => 'navigation' %>
+<!-- partial nav -->
+
+<div class="ui center aligned page grid">
+  	<div class="sixteen column center aligned">
+
+     	<% if @departments.empty? %>
+
+		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
+			  <i class="info teal icon"></i>
+			  <div class="content">
+			    Nothing found!
+			    <div class="sub header">Sorry. We didn't found anything.</div>
+			  </div>
+			</h2>
+
+		<% else %>
+
+    	<table class="ui very compact striped table" data-sr='ease-in-out'>
+		  <thead>
+		    <tr> 
+		      <th class="twelve wide">List of Departments</th>
+		      <th class="four wide"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  <% @departments.each do |department, n| %>
+		    <tr>
+		      <td><%= department.name %> </td>
+		      <td class="right aligned">
+
+		      <%= link_to('Edit', edit_department_path(department.id), :class => 'mini ui basic blue button') %>
+
+		      <%= link_to('Delete', delete_department_path(department.id), :class => 'mini ui basic red button') %>
+
+		      </td>
+		    </tr>
+		  <% end %> 
+		  </tbody>
+		</table>
+		
+		<% end %> 
+		<div class="ui hidden divider"></div>
+
+		<div class="ui page grid">
+
+		    <div class="sixteen wide column right aligned">
+		    	<%= will_paginate @departments,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>' %>
+		    </div><!-- 16 column -->
+
+		</div><!-- grid -->
+
+
+    </div><!-- 16 column -->
+</div><!-- grid -->

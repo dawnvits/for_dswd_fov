@@ -1,0 +1,22 @@
+<div class="ui page grid">
+    <div class="sixteen wide column center aligned">
+
+    <div class="ui hidden divider"></div>
+
+    <h2 class="ui center aligned icon header" data-sr='ease-in-out' id="admin_welcome">
+	  <i class="circular protect icon"></i>
+	  Please protect the integrity of your login credentials
+	</h2>
+
+	<div class="ui hidden divider"></div>
+
+		<div data-sr='ease-in-out'>
+		<%= link_to('<i class="user icon"></i> Manage Employee Accounts'.html_safe, employees_path, :class => 'large ui teal button') %> 
+
+		<%= active_link_to('<i class="building icon"></i> Manage Departments'.html_safe, departments_path, :class => 'large ui teal button') %>
+		
+		</div>
+	</div>
+</div>		
+
+ 

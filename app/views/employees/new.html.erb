@@ -1,0 +1,81 @@
+<%= render :partial => 'navigation' %>
+
+<div class="ui page grid">
+
+    <div class="ui two column center aligned grid">
+  		<div class="column left aligned" data-sr='scale up 20%'>
+
+  			<h2 class="ui icon header center aligned">
+			    <i class="file text outline icon"></i>
+  			  <div class="content">
+  			    New Account
+  			  </div>
+			  </h2>
+
+    	<%= form_for @employee, :html => { :class => "ui form attached fluid segment" } do |f| %>
+
+    	  <% if @employee.errors.any? %>
+  			  <div class="ui purple message">
+  				  <div class="header">
+  				  		Please check the following:
+  				  </div>
+  				  <% @employee.errors.full_messages.each do |msg| %>
+  				  <ul class="list">
+  				    <li><%= msg %></li>
+  				  </ul>
+  				  <% end %>   
+  			  </div>
+		    <% end %>
+      
+          <div class="ui hidden divider"></div>
+
+          <div class="two fields">
+            <div class="field">
+              <%= f.label(:first_name, "First Name") %>
+              <%= f.text_field :first_name %>
+            </div>
+
+            <div class="field">
+              <%= f.label(:middle_name, "Middle Name") %>
+              <%= f.text_field :middle_name %>
+            </div>
+          </div>
+
+          <div class="two fields">
+            <div class="field">
+              <%= f.label(:last_name, "Last Name") %>
+              <%= f.text_field :last_name  %>
+            </div>
+               
+            <div class="field">
+              <label>Department</label>
+                    <%= f.collection_select :department, 
+                                            Department.order(:name), 
+                                            :name, :name, 
+                                            {}, {} %> 
+                
+            </div>
+          </div>
+          
+          <div class="two fields">
+            
+            <div class="field">
+              <%= f.label :email %>
+              <%= f.text_field :email %>
+            </div>
+            
+            <div class="field">
+                <%= f.label :password %>
+                <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+
+          </div>
+
+      	  <%= f.submit "Create", :class => 'ui fluid primary button' %> 
+
+	    <% end %>
+
+    	</div>
+    </div><!-- 16 column -->
+</div><!-- grid -->
+

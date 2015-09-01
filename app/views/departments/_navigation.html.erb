@@ -1,0 +1,15 @@
+<div class="ui right aligned page grid">
+    <div class="sixteen wide column">
+        <div class="ui text menu">
+
+          <%= link_to_unless_current('<i class="chevron left icon"></i> Back'.html_safe, 
+                                      departments_path, 
+                                      :class => 'item') %>
+
+          <%= active_link_to('<i class="add circle icon"></i> New Department'.html_safe, 
+                              new_department_path, 
+                              :class => 'blue item') %> 
+		      
+		    </div><!-- ui menu -->
+    </div><!-- 16 column -->
+</div><!-- grid -->

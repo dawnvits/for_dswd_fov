@@ -1,0 +1,48 @@
+<% if !flash.empty? %>
+  <% flash.each do |name, msg| %>
+        <div class="ui hidden divider"></div>
+          <center>
+            <div class="message_container" data-sr='wait 1.2s enter top'>
+                <div class="ui icon floating purple message">
+                  <i class="close icon"></i>
+                  <i class="info circle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                          <%= msg %>
+                        </div>
+                        <p>Please make sure your log in credentials are correct when logging in.</p>
+                    </div>
+                </div>
+            </div>
+          </center>
+  <% end %>
+<% end %>
+
+<div class="wrapper" data-sr='wait 0.3s flip 45deg' >
+  <div class="container" data-sr='wait 0.8s, scale up 30%'>
+  
+      <h1 data-sr='wait 0.8s, scale up 20%'>Welcome</h1>  
+
+      <div data-sr='wait 0.8s, scale up 20%'>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+       
+          <%= f.text_field :email, autocomplete: "off", :placeholder => "Email" %>
+          <%= f.password_field :password, autocomplete: "off", :placeholder => "Password" %>
+          <%= f.submit "Log in", :class => 'login_btn' %>
+          <div class="ui hidden divider"></div>
+          <div data-sr='wait 1s, scale up 20%'>
+          <%= link_to('<i class="add circle icon"></i> New Account'.html_safe, new_employee_registration_path, :class => 'register_btn') %>
+          <%= link_to('<i class="search icon"></i> Search Form'.html_safe, search_index_path, :class => 'search_btn' ) %>
+          </div>
+      <% end %>
+      </div>
+      
+
+  </div><!-- container -->
+
+  <ul class="bg-bubbles">
+    <li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+  </ul>
+  
+</div><!-- wrapper -->
+

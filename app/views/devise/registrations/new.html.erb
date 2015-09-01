@@ -1,0 +1,73 @@
+<div class="register" >
+  <div class="ui two column centered grid">
+  <div class="column" data-sr='ease-in-out'>
+
+      <center>
+        <h2>Register</h2>
+      </center>
+
+      <%= form_for(@employee, url: registration_path(resource_name), :html => {class: 'ui form', :id => 'register'} ) do |f| %>
+      
+      <% if @employee.errors.any? %>
+        <div class="ui purple message">
+          <div class="header">
+              Please check the following:
+          </div>
+          <% @employee.errors.full_messages.each do |msg| %>
+          <ul class="list">
+            <li><%= msg %></li>
+          </ul>
+          <% end %>   
+        </div>
+      <% end %>
+
+          <h4 class="ui dividing header">Personal Information</h4>
+          
+          <div class="two fields">
+            <div class="field">
+              <%= f.label(:first_name, "First Name") %>
+              <%= f.text_field :first_name, autocomplete: "off" %>
+            </div>
+
+            <div class="field">
+              <%= f.label(:middle_name, "Middle Name") %>
+              <%= f.text_field :middle_name, autocomplete: "off" %>
+            </div>
+          </div>
+
+          <div class="two fields">
+
+            <div class="field">
+              <%= f.label(:last_name, "Last Name") %>
+              <%= f.text_field :last_name, autocomplete: "off"  %>
+            </div>
+
+            <div class="field">
+                <label>Department</label>
+                    <%= f.collection_select :department, Department.order(:name), :name, :name %>
+            </div>
+         
+          </div>
+
+          <h4 class="ui dividing header">Account Information</h4>
+          <div class="two fields">
+
+            <div class="field">
+              <%= f.label :email %>
+              <%= f.text_field :email, autocomplete: "off" %>
+            </div>
+            
+            <div class="field">
+                <%= f.label :password %>
+                <%= f.password_field :password, autocomplete: "off" %>
+            </div>
+
+          </div>
+
+      <%= f.submit "Submit", :class => 'ui primary button' %> 
+
+      <% end %>
+
+  </div><!--column -->
+  </div><!-- ui grid -->
+</div><!-- register -->

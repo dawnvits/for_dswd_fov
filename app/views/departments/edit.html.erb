@@ -1,0 +1,48 @@
+<!-- partial nav -->
+	<%= render :partial => 'navigation' %>
+<!-- partial nav -->
+
+<div class="ui two column center aligned page grid">
+  	<div class="column left aligned" data-sr='scale up 20%'>
+
+			<h2 class="ui icon header center aligned">
+				  <i class="building outline icon"></i>
+				  <div class="content">
+				    Update Department
+				  </div>
+			</h2>
+
+	<%= form_for @department, :html => { :class => "ui form attached fluid segment" } do |f| %>
+
+    	  <% if @department.errors.any? %>
+			  <div class="ui purple message">
+				  <div class="header">
+				  		Please check the following:
+				  </div>
+				  <% @department.errors.full_messages.each do |msg| %>
+					  <ul class="list">
+					    <li><%= msg %></li>
+					  </ul>
+				  <% end %>   
+			  </div>
+		  <% end %>
+
+ 
+		  <div class="field">	
+		  		<label>Name</label>	
+		  </div>
+          		  
+          <div class="field">
+            	<%= f.text_field :name %>
+          </div>
+				          		
+          <div class="field">
+            	<%= f.submit "Update", :class => 'ui fluid primary button' %>
+          </div>     
+
+   		  <div class="ui hidden divider"></div>
+		
+	<% end %>
+	
+	</div><!-- column -->
+</div><!-- grid -->

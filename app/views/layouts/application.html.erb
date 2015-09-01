@@ -1,33 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
   <title>Tracking System</title>
-  
   <%= favicon_link_tag 'favicon.ico' %>
-
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.blue-indigo.min.css" /> 
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.2/material.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  
-  <style>
-  	.material-icons.md-18 { font-size: 18px; }
-	.material-icons.md-24 { font-size: 24px; }
-	.material-icons.md-36 { font-size: 36px; }
-	.material-icons.md-48 { font-size: 48px; }
-  </style>
-</head>
-<body class="mdl-color--grey-50">
 
+  <style> [data-sr] { visibility: hidden; } </style>
+</head>
+<body>
+
+<% if employee_signed_in? %>
+	<div class="ui inverted teal menu">
+  		  
+  		  <% if !current_employee.admin %>
+		  	  <div class="header item">
+		  	  	<i class="user icon"></i>
+			    <%= current_employee.email %>
+			  </div>
+			    <div class="header item">
+		  	  	<i class="building icon"></i>
+			    <%= current_employee.department %>
+			  </div>
+		  <% else %>
+			  <div class="header item">
+			    System Administrator
+			  </div>
+			  <div class="header item">
+			    <i class="building icon"></i>
+			    <%= current_employee.department %>
+			  </div>
+		  <% end %>
+
+		  <% if !flash[:notice].blank? %>
+	  		<div class="active item">
+			  <%= flash[:notice] %>
+			</div>
+	 	  <% end %>
+	  	
+	  	  <div class="right menu">
+
+	  	    <%= link_to_unless_current('<i class="chevron circle left icon"></i> Home'.html_safe, root_path, :class => 'item', :'data-content' => 'Return Home', :'data-variation' => 'large ') %>
+
+	  	    <%= active_link_to('<i class="search icon"></i> Search'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Form', :'data-variation' => 'large') %>
+
+	  		<%= active_link_to('<i class="add circle icon"></i> Add New Form'.html_safe, new_tracking_form_path, :class => 'item', :'data-content' => 'Create New Form', :'data-variation' => 'large') %>
+
+	  		<% if current_employee.admin %>
+	  			<%= link_to_unless_current('<i class="protect icon"></i> Administrator Panel'.html_safe, admin_index_path, :class => 'item', :'data-content' => 'Return to Administrator Panel', :'data-variation' => 'large ') %>
+	  		<% end %>
+
+	  		<%= active_link_to('<i class="lock icon"></i>'.html_safe, edit_employee_registration_path, :class => 'item', :'data-content' => 'Account Settings: For security purposes, please change your password every three months.', :'data-variation' => 'wide large') %>  
+
+			<%= link_to('<i class="sign out icon"></i>'.html_safe, destroy_employee_session_path, :method => :delete, :class => 'item', :'data-content' => 'Logout?', :'data-variation' => 'large ' ) %>
+		  </div><!-- right menu -->
+	</div><!-- ui menu -->
+<% end %>
+
+<!-- before yield -->
 <%= yield %>
+<!--after yield -->
 
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!-- partial nav -->
+	<%= render :partial => 'navigation' %>
+<!-- partial nav -->
+
+<div class="ui center aligned page grid">
+    <div class="sixteen wide column" data-sr='scale up 10%'>
+
+	    <div class="dividing header"></div>
+
+			<h2 class="ui icon header">
+			  <i class="file text outline icon"></i>
+			  <div class="content">
+			    Account Information
+			  </div>
+			</h2>
+
+			<% if @employee.active? && @employee.admin? %>
+				<p><i class="active green checkmark icon"></i>Active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="active green checkmark icon"></i>Administrator</p>
+			<% elsif @employee.active? && !@employee.admin %>
+				<p><i class="active green checkmark icon"></i>Active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="active red remove icon"></i>Administrator</p>
+			<% elsif !@employee.active && @employee.admin %>
+				<p><i class="active red remove icon"></i>Active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="active green checkmark icon"></i>Administrator</p>
+			<% elsif !@employee.active && !@employee.admin %> 
+				<p><i class="active red remove icon"></i>Active &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="active red remove icon"></i>Administrator</p>
+			<% end %>
+
+		</div>
+
+    </div>
+</div>
+
+<div class="ui page grid" data-sr='ease-in'>
+
+    <div class="three wide column">
+    </div>
+
+    <div class="five wide column center aligned">
+
+    	<h4>Name</h4>
+		<p><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></p>
+
+
+		<h4>Email</h4>
+		<p><%= @employee.email %></p>
+
+		<% if !@employee.department.empty? %>
+    		<h4>Department</h4>
+			<p><%= @employee.department %></p>
+		<% end %>
+		
+    </div>
+
+    <div class="five wide column center aligned">
+
+		<h4>Created at</h4>
+		
+		<% if @employee.created_at? %>
+		 	<p><%= @employee.created_at.strftime('%B %d, %Y @ %I: %M %p') %> </p>
+		<% else %>
+			<p>Not Available</p>
+		<% end %>
+
+		<h4>Last Login</h4>
+
+		<% if @employee.current_sign_in_at? %>
+	
+			<p>
+				<% if @employee.sign_in_count? %>
+					<span class="ui circular yellow label">
+				     <%= @employee.sign_in_count %>
+				    </span>
+			    <% end %>
+			    <%= @employee.current_sign_in_at.strftime('%B %d, %Y @ %I: %M %p') %>
+			</p>
+
+		<% else %>
+			<p>Not Available</p>
+		<% end %>
+
+    </div>
+
+    <div class="three wide column">
+    </div>
+    
+</div><!-- ui grid -->

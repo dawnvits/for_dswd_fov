@@ -1,0 +1,53 @@
+<div class="update_account">
+  <div class="ui two column centered grid">
+    <div class="column" data-sr='ease-in-out'>
+
+      <center>
+        <h2>Edit Account Information</h2>
+      </center>
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'ui form' }) do |f| %>
+        <%= devise_error_messages! %>
+
+        <div class="ui hidden divider"></div>
+
+        <div class="two fields">
+          <div class="field">
+            <%= f.label :email %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "off" %>
+          </div>
+
+          <div class="field">
+            <%= f.label :current_password %> 
+            <%= f.password_field :current_password, autocomplete: "off", :placeholder => "Enter your current password" %>
+          </div>
+        </div>
+
+       
+        <div class="field">
+            <%= f.label :password, "New Password" %> 
+            <%= f.password_field :password, autocomplete: "off", :placeholder => 'Enter your new password' %>
+        </div>
+
+        <div class="ui right aligned grid">
+          <div class="sixteen wide column">
+            <%= f.submit "Save changes", :class => 'ui primary button' %>
+            <% if current_employee.admin? %>
+              <%= link_to 'Cancel', admin_index_path, :class => 'ui basic button' %>
+            <% else %>
+              <%= link_to 'Cancel', root_url, :class => 'ui basic button' %>
+            <% end %>
+          </div>
+        </div>
+       
+      <% end %>
+
+      <center>
+        <small>
+            Developed by: <a href="https://facebook.com/dawn.vits">Dawn Vits</a><br>
+            In case of improvements and bug fixes, email at <i class="mail icon"></i><a href="mailto:dev.dawn024@gmail.com">dev.dawn024@gmail.com</a>
+        </small>
+      </center>
+    </div><!-- column -->
+  </div><!-- grid -->
+</div><!-- udpate_account -->

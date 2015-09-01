@@ -1,0 +1,28 @@
+// Place all the styles related to the account_information controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.wrapper a.back_btn {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 16px;
+  outline: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 120px;
+  border-radius: 40px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+  font-weight: 300;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+}
+.wrapper a.back_btn:hover {
+  background-color: white;
+  color: #53e3a6;
+}

@@ -1,0 +1,74 @@
+<!-- partial nav -->
+	<%= render :partial => 'navigation' %>
+<!-- partial nav -->
+
+
+
+<div class="ui page grid">
+    <div class="sixteen wide column">
+
+     	<% if @employees.empty? %>
+
+		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
+			  <i class="info teal icon"></i>
+			  <div class="content">
+			    Nothing found!
+			    <div class="sub header">Sorry. We didn't found anything.</div>
+			  </div>
+			</h2>
+
+		<% else %>
+    	<table class="ui very compact striped table" data-sr='ease-in-out'>
+		  <thead>
+		    <tr>
+		      <th class="four wide">Name</th>
+		      <th class="four wide">Email</th>
+		      <th class="one wide center aligned">Active</th>
+		      <th class="two wide center aligned">Administrator</th>
+		      <th class="four wide center aligned"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  <% @employees.each do |employee| %>
+		    <tr>
+		      <td><%= employee.last_name %>, <%= employee.first_name %> <%= employee.middle_name %> </td>
+		      <td><%= employee.email %></td>
+
+			      <% if employee.active? %>
+			      	<td class="center aligned"><i class="active teal checkmark icon"></i></td>
+			      <% else %>
+			      	<td class="center aligned"><i class="active red remove icon"></i></td>
+			      <% end %>
+
+			      <% if employee.admin? %>
+			      	<td class="center aligned"><i class="active teal checkmark icon"></i></td>
+			      <% else %>
+			      	<td class="center aligned"><i class="active red remove icon"></i></td>
+			      <% end %>
+
+		      <td class="right aligned">
+		      
+		      <%= link_to('View', employee_path(employee.id), :class => 'mini ui basic blue button') %>
+
+		      <%= link_to('Settings', edit_employee_path(employee.id), :class => 'mini ui basic blue button') %>
+
+		      <%= link_to('Delete', delete_employee_path(employee.id), :class => 'mini ui basic red button') %>
+		      
+		      </td>
+		    </tr>
+		  <% end %> 
+		  </tbody>
+		</table>
+		<% end %> 
+		<div class="ui hidden divider"></div>
+
+		<div class="ui page grid">
+
+		    <div class="sixteen wide column right aligned">
+		    	<%= will_paginate @employees,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>' %>
+		    </div><!-- 16 column -->
+
+		</div><!-- grid -->
+
+    </div><!-- 16 column -->
+</div><!-- grid -->

@@ -1,0 +1,47 @@
+<div class="ui page grid">
+
+    <div class="ui two column center aligned grid">
+  		<div class="column left aligned" data-sr='scale up 20%'>
+
+  			<div class="ui hidden divider">
+
+  			</div>
+
+			<%= form_for @tracking_form, :url => returning_tracking_form_path, :html => { :class => "ui form attached fluid segment" } do |f| %>
+
+				<h2 class="ui center aligned icon header">
+					<i class="arrow circle left icon"></i>
+					Return to
+				</h2>
+				
+				<div class="field">
+			     	<label>Department</label>
+			        
+			        <%= f.collection_select :current_dept, Department.order(:name), :name, :name %>
+			            
+			    </div>
+
+			    <div class="field">
+			    	
+			    	<label>State reason for returning</label>
+			    
+			        <%= f.text_area :return_notice %>
+			            
+			    </div>
+
+			    <div class="two fields">
+		            <div class="field">
+		              <%= f.submit "Return", :class => 'ui fluid yellow button' %> 
+		            </div>
+		            
+		            <div class="field">
+		              <%= link_to('Back', :back, :class => 'ui fluid button')  %>
+		            </div>
+	          	</div>
+
+			<% end %>
+
+		</div>
+	</div>
+
+</div><!-- grid -->
