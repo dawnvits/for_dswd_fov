@@ -1,9 +1,9 @@
-<div class="ui center aligned page grid">
+<div class="ui page grid center aligned">
     <div class="sixteen wide column">
 
 	    <div class="dividing header"></div>
 
-		<div class="ui teal tall stacked segment">
+		<div class="ui tall stacked segment">
 
 			  	<div class="ui page grid">
 
@@ -15,12 +15,14 @@
 							  <div class="content">
 							    Form Information
 							  </div>
-							  <%= link_to('Manage Form', edit_tracking_form_path(@tracking_form.id), :class => 'ui basic blue button', :'data-sr' => 'ease-in') %>
+							  	<% if @tracking_form.origination_dept == current_employee.department || current_employee.admin %>
+							  		<%= link_to('Manage Form', edit_tracking_form_path(@tracking_form.id), :class => 'ui button', :'data-sr' => 'ease-in') %>
+							  	<% end %>
 							</h2>
 
 							<div class="ui hidden divider"></div>
 							
-							<div class="ui relaxed divided list" data-sr='ease-in'>	
+							<div class="ui relaxed list" data-sr='ease-in'>	
 
 							  <div class="item" data-sr='ease-in'>   
 							    <div class="content">
@@ -98,7 +100,11 @@
 							    Remarks
 							  </div>
 
-							  <%= link_to('Add Remark', add_remark_tracking_form_path(@tracking_form.id), :class => 'ui basic blue button') %>
+							  <% if @tracking_form.origination_dept == current_employee.department || current_employee.admin %>
+							  		<%= link_to('Add Remark', add_remark_tracking_form_path(@tracking_form.id), :class => 'ui button') %>
+							  <% end %>
+
+							  
 
 							</h2>
 
@@ -107,12 +113,11 @@
 								  <div class="item" data-sr='ease-in'>   
 								    <div class="content">
 								      <div class="description">
-								      	<i class="quote left icon"></i>
 								      		<%= remark.content %>
-								      		<span class="ui teal label">
-								      			added on <%= remark.created_at.strftime('%B %d, %Y at %I: %M %p') %>
-								      		</span> 
-								    	</div>
+								      		<small>
+								      			<em>added on <%= remark.created_at.strftime('%B %d, %Y at %I: %M %p') %></em>
+								      		</small> 
+								      </div>
 								    </div>
 								  </div>
 								<% end %>
@@ -133,23 +138,27 @@
 							    History
 							  </div>
 							</h2>
-
-							<div class="ui relaxed divided list">
+							
+							<div class="ui feed">
 								<% @history.each do |history| %>
-								  <div class="item" data-sr='ease-in'>   
+								  <div class="event">
+								    <div class="label">
+								      <i class="teal wait icon"></i>
+								    </div>
 								    <div class="content">
-								      <div class="description">
-								      	<i class="quote left icon"></i>
-								      		<%= history.description %>
-								    	</div>
+								      <div class="summary">
+								      	<%= history.description %>
+								      </div>
 								    </div>
 								  </div>
 								<% end %>
+							</div><!-- feed -->
 
+							<div class="ui relaxed list">
 								<div class="item" data-sr='ease-in'>   
 								    <div class="content">
 								      <div class="header"><%= @tracking_form.form_type %> Current Department:</div>
-								      <div class="description"><%= @tracking_form.current_dept %></div>
+								       <div class="description"><em><%= @tracking_form.current_dept %></em></div>
 								    </div>
 							    </div>
 							</div>

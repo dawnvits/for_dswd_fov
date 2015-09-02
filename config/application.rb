@@ -23,5 +23,8 @@ module TrackingSystem
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Include Semantic UI Assets in lib
+    config.assets.paths << Rails.root.join("lib", "semantic", "dist")
   end
 end

@@ -8,9 +8,9 @@ module DeviseHelper
                       :resource => resource.class.model_name.human.downcase)
 
     html = <<-HTML
-    <div class="ui purple floating message">
+    <div class="ui teal floating message">
       <div class="header">
-       Please check the following:
+       Oops! Please check the following:
       </div>
       <ul class="list">
         <li>#{messages}</li>

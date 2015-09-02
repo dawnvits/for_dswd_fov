@@ -1,9 +1,7 @@
-s<!-- partial nav -->
-	<%= render :partial => 'navigation' %>
-<!-- partial nav -->
-
 <div class="ui two column center aligned page grid">
   	<div class="column left aligned" data-sr='scale up 20%'>
+
+  			<div class="ui hidden divider"></div>
 
 			<h2 class="ui icon header center aligned">
 				  <i class="building outline icon"></i>
@@ -15,9 +13,9 @@ s<!-- partial nav -->
 	<%= form_for @department, :html => { :class => "ui form attached fluid segment" } do |f| %>
 
     	  <% if @department.errors.any? %>
-			  <div class="ui purple message">
+			  <div class="ui teal message">
 				  <div class="header">
-				  		Please check the following:
+				  		Oops! Please check the following:
 				  </div>
 				  <% @department.errors.full_messages.each do |msg| %>
 					  <ul class="list">
@@ -33,11 +31,17 @@ s<!-- partial nav -->
 		  </div>
           		  
           <div class="field">
-            	<%= f.text_field :name %>
+            	<%= f.text_field :name, :placeholder => "Enter Department" %>
           </div>
 				          		
-          <div class="field">
-            	<%= f.submit "Create", :class => 'ui fluid primary button' %>
+          <div class=" two fields">
+          		<div class="field">
+          			<%= f.submit "Create", :class => 'ui fluid primary button' %>
+          		</div>
+
+          		<div class="field">
+	              <%= link_to('Cancel', :back, :class => 'ui fluid button')  %>
+	            </div>
           </div>     
 
    		  <div class="ui hidden divider"></div>

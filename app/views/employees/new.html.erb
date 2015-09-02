@@ -15,9 +15,9 @@
     	<%= form_for @employee, :html => { :class => "ui form attached fluid segment" } do |f| %>
 
     	  <% if @employee.errors.any? %>
-  			  <div class="ui purple message">
+  			  <div class="ui teal message">
   				  <div class="header">
-  				  		Please check the following:
+  				  		Oops! Please check the following:
   				  </div>
   				  <% @employee.errors.full_messages.each do |msg| %>
   				  <ul class="list">
@@ -32,19 +32,19 @@
           <div class="two fields">
             <div class="field">
               <%= f.label(:first_name, "First Name") %>
-              <%= f.text_field :first_name %>
+              <%= f.text_field :first_name, :placeholder => "Enter your First Name" %>
             </div>
 
             <div class="field">
               <%= f.label(:middle_name, "Middle Name") %>
-              <%= f.text_field :middle_name %>
+              <%= f.text_field :middle_name, :placeholder => "Enter your Middle Name" %>
             </div>
           </div>
 
           <div class="two fields">
             <div class="field">
               <%= f.label(:last_name, "Last Name") %>
-              <%= f.text_field :last_name  %>
+              <%= f.text_field :last_name, :placeholder => "Enter your Last Name"  %>
             </div>
                
             <div class="field">
@@ -61,12 +61,12 @@
             
             <div class="field">
               <%= f.label :email %>
-              <%= f.text_field :email %>
+              <%= f.text_field :email, :placeholder => "Enter your Email" %>
             </div>
             
             <div class="field">
                 <%= f.label :password %>
-                <%= f.password_field :password, autocomplete: "off" %>
+                <%= f.password_field :password, autocomplete: "off", :placeholder => "Enter your Password" %>
             </div>
 
           </div>

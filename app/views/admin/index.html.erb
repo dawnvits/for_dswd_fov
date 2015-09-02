@@ -5,18 +5,138 @@
 
     <h2 class="ui center aligned icon header" data-sr='ease-in-out' id="admin_welcome">
 	  <i class="circular protect icon"></i>
-	  Please protect the integrity of your login credentials
 	</h2>
 
 	<div class="ui hidden divider"></div>
 
-		<div data-sr='ease-in-out'>
-		<%= link_to('<i class="user icon"></i> Manage Employee Accounts'.html_safe, employees_path, :class => 'large ui teal button') %> 
-
-		<%= active_link_to('<i class="building icon"></i> Manage Departments'.html_safe, departments_path, :class => 'large ui teal button') %>
-		
+		<div class="ui three item menu">
+			<%= link_to('<i class="newspaper icon"></i> Manage Tracking Forms'.html_safe, root_path, :class => 'item') %>
+			<%= link_to('<i class="users icon"></i> Manage Employee Accounts'.html_safe, employees_path, :class => 'item') %> 
+			<%= link_to('<i class="building icon"></i> Manage Departments'.html_safe, departments_path, :class => 'item') %>
 		</div>
+
 	</div>
-</div>		
+</div>	
+
+<div class="ui hidden divider"></div>
+
+<div class="ui page grid">
+    <div class="sixteen wide column">
+
+	<% if @tracking_forms.empty? %>
+
+			<div class="ui hidden divider"></div>
+		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
+			  <i class="info teal icon"></i>
+			  <div class="content">
+			    Nothing found!
+			    <div class="sub header">Sorry. We didnt found any forms.</div>
+			  </div>
+			</h2>
+
+	<% else %>
+			
+		  <table class="ui very compact blue table" data-sr='ease-in-out'>
+			  <thead>
+			    <tr>
+			      
+			      <th class="four wide">Status</th>
+			      <th class="eight wide center aligned">Transaction Name</th>
+			      <th class="four wide"></th>
+			      
+			    </tr>
+			  </thead>
+		  	  <tbody>
+
+			 <% @tracking_forms.each do |tracking_form| %>
+			 <tr>
+
+			 	<td>
+
+			 		<% if tracking_form.received %>
+			 			<p>
+			 				<i class="blue bookmark icon"></i>
+			 				Received
+			 			</p>
+
+			 		<% elsif tracking_form.forwarded %>
+
+			 			<% if tracking_form.current_dept == current_employee.department && tracking_form.origination_dept == current_employee.department %>
+			 			<p>
+			 				<i class="send icon"></i>
+			 				Recently forwarded to <%= tracking_form.current_dept %>
+			 			</p>
+			 			<% elsif tracking_form.current_dept == current_employee.department %>
+			 			<p>
+			 				<i class="blue share icon"></i>
+			 				Incoming
+			 			</p>
+			 			<% elsif tracking_form.origination_dept == current_employee.department %>
+			 			<p>
+			 				<i class="send icon"></i>
+			 				Forwarded to <%= tracking_form.current_dept %>
+			 			</p>
+			 			<% end %>
+
+			 		<% elsif tracking_form.approved_by_division_chief %>
+			 			<p>
+			 				<i class="blue thumbs outline up icon"></i>
+			 				Approved
+			 			</p>
+			 		<% elsif !tracking_form.approved_by_division_chief && tracking_form.returned %>
+			 			<p>
+			 				<i class="red ban icon"></i>
+			 				Returned and Pending
+			 			</p>
+			 		<% elsif !tracking_form.approved_by_division_chief %>
+			 			<p>
+			 				<i class="red ban icon"></i>
+			 				Pending
+			 			</p>
+			 		<% elsif tracking_form.returned %>
+			 			<p>
+			 				<i class="blue arrow circle left icon"></i>
+			 				Returned 
+			 			</p>
+			 		<% end %>
+			 	
+			 	</td>
+
+			 	<td class="center aligned"> 
+			 		<%= tracking_form.transaction_name %>	
+			 	</td>
+
+			 	<td class="right aligned">
+
+			 		<% if !tracking_form.received && tracking_form.forwarded %>
+			 			<%= link_to('Receive', receive_tracking_form_path(tracking_form.id), :method => :put, :class => 'mini ui basic blue button') %>
+			 		<% end %>
+
+			 		<%= link_to('View', 
+			 					tracking_form_path(tracking_form.id), 
+			 					:class => 'mini ui basic blue button') %>
+
+			      	<%= link_to('Delete', 
+			      				delete_tracking_form_path(tracking_form.id), 
+			      				:class => 'mini ui basic red button') %>
+			 	
+			 	</td>
+
+			 </tr>
+			 <% end %>
+		  	 </tbody>
+		  </table>
+    <% end %>
+
+	</div><!-- 16 column -->
+</div><!-- grid -->
+
+<div class="ui page grid">
+
+    <div class="sixteen wide column center aligned">
+    	<%= will_paginate @tracking_forms,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>', :'data-sr' => 'ease-in-out' %>
+    </div><!-- 16 column -->
+
+</div><!-- grid -->	
 
  

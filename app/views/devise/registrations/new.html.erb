@@ -9,7 +9,7 @@
       <%= form_for(@employee, url: registration_path(resource_name), :html => {class: 'ui form', :id => 'register'} ) do |f| %>
       
       <% if @employee.errors.any? %>
-        <div class="ui purple message">
+        <div class="ui teal message">
           <div class="header">
               Please check the following:
           </div>
@@ -21,17 +21,17 @@
         </div>
       <% end %>
 
-          <h4 class="ui dividing header">Personal Information</h4>
+          <h4 class="ui header">Personal Information</h4>
           
           <div class="two fields">
             <div class="field">
               <%= f.label(:first_name, "First Name") %>
-              <%= f.text_field :first_name, autocomplete: "off" %>
+              <%= f.text_field :first_name, autocomplete: "off", :placeholder => 'Enter your First Name' %>
             </div>
 
             <div class="field">
               <%= f.label(:middle_name, "Middle Name") %>
-              <%= f.text_field :middle_name, autocomplete: "off" %>
+              <%= f.text_field :middle_name, autocomplete: "off", :placeholder => 'Enter your Middle Name' %>
             </div>
           </div>
 
@@ -39,7 +39,7 @@
 
             <div class="field">
               <%= f.label(:last_name, "Last Name") %>
-              <%= f.text_field :last_name, autocomplete: "off"  %>
+              <%= f.text_field :last_name, autocomplete: "off", :placeholder => 'Enter your Last Name'  %>
             </div>
 
             <div class="field">
@@ -49,17 +49,17 @@
          
           </div>
 
-          <h4 class="ui dividing header">Account Information</h4>
+          <h4 class="ui header">Account Information</h4>
           <div class="two fields">
 
             <div class="field">
               <%= f.label :email %>
-              <%= f.text_field :email, autocomplete: "off" %>
+              <%= f.text_field :email, autocomplete: "off", :placeholder => 'Enter your Email' %>
             </div>
             
             <div class="field">
                 <%= f.label :password %>
-                <%= f.password_field :password, autocomplete: "off" %>
+                <%= f.password_field :password, autocomplete: "off", :placeholder => 'Enter your Password' %>
             </div>
 
           </div>

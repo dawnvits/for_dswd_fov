@@ -4,6 +4,7 @@ class AdminController < ApplicationController
   before_action :verify_if_admin
 
   def index
+  	@tracking_forms = TrackingForm.all.paginate(:page => params[:page], :per_page => 24)
   end
 
   private

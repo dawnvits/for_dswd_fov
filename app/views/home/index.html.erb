@@ -16,7 +16,7 @@
 
 	<% else %>
 			
-		  <table class="ui very compact teal table" data-sr='ease-in-out'>
+		  <table class="ui very compact blue table" data-sr='ease-in-out'>
 			  <thead>
 			    <tr>
 			      
@@ -48,7 +48,7 @@
 			 			</p>
 			 			<% elsif tracking_form.current_dept == current_employee.department %>
 			 			<p>
-			 				<i class="teal share icon"></i>
+			 				<i class="blue share icon"></i>
 			 				Incoming
 			 			</p>
 			 			<% elsif tracking_form.origination_dept == current_employee.department %>
@@ -70,7 +70,7 @@
 			 			</p>
 			 		<% elsif !tracking_form.approved_by_division_chief %>
 			 			<p>
-			 				<i class="ban red icon"></i>
+			 				<i class="red ban icon"></i>
 			 				Pending
 			 			</p>
 			 		<% elsif tracking_form.returned %>
@@ -88,7 +88,7 @@
 
 			 	<td class="right aligned">
 
-			 		<% if !tracking_form.received && tracking_form.forwarded %>
+			 		<% if tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.forwarded %>
 			 			<%= link_to('Receive', receive_tracking_form_path(tracking_form.id), :method => :put, :class => 'mini ui basic blue button') %>
 			 		<% end %>
 

@@ -12,7 +12,7 @@
 <body>
 
 <% if employee_signed_in? %>
-	<div class="ui inverted teal menu">
+	<div class="ui inverted blue menu">
   		  
   		  <% if !current_employee.admin %>
 		  	  <div class="header item">
@@ -25,7 +25,7 @@
 			  </div>
 		  <% else %>
 			  <div class="header item">
-			    System Administrator
+			     <i class="spy icon"></i> SYSTEM ADMINISTRATOR
 			  </div>
 			  <div class="header item">
 			    <i class="building icon"></i>
@@ -41,9 +41,9 @@
 	  	
 	  	  <div class="right menu">
 
-	  	    <%= link_to_unless_current('<i class="chevron circle left icon"></i> Home'.html_safe, root_path, :class => 'item', :'data-content' => 'Return Home', :'data-variation' => 'large ') %>
+	  	    <%= active_link_to('<i class="search icon"></i> Search'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Tracking Form', :'data-variation' => 'large') %>
 
-	  	    <%= active_link_to('<i class="search icon"></i> Search'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Form', :'data-variation' => 'large') %>
+	  	    <%= link_to('<i class="newspaper icon"></i> Tracking Forms'.html_safe, root_path, :class => 'item', :'data-content' => 'View Tracking Forms', :'data-variation' => 'large ') %>
 
 	  		<%= active_link_to('<i class="add circle icon"></i> Add New Form'.html_safe, new_tracking_form_path, :class => 'item', :'data-content' => 'Create New Form', :'data-variation' => 'large') %>
 

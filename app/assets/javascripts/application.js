@@ -144,6 +144,15 @@ $(document).ready(function(){
 	          type   : 'empty',
 	        }
 	      ]
+	    },
+
+	    department_name: {
+	      identifier  : 'department[name]',
+	      rules: [
+	        {
+	          type   : 'empty',
+	        }
+	      ]
 	    }
 
 

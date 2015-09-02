@@ -6,9 +6,9 @@
       <%= form_for @tracking_form, :html => { :class => "ui form attached fluid segment" } do |f| %>
 
         <% if @tracking_form.errors.any? %>
-          <div class="ui purple message" data-sr='ease-in-out'>
+          <div class="ui teal message" data-sr='ease-in-out'>
             <div class="header">
-                Please check the following:
+                Oops! Please check the following:
             </div>
             <% @tracking_form.errors.full_messages.each do |msg| %>
             <ul class="list">
@@ -18,16 +18,17 @@
           </div>
         <% end %>
 
-          <div class="ui horizontal header divider" data-sr='ease-in-out'>
-            <i class="blue file text outline icon"></i>
-            Form Information
-          </div>
+        <h2 class="ui center aligned icon header">
+          <i class="circular file text outline icon"></i>
+          Form Information
+        </h2>
+        <div class="ui hidden divider"></div> <div class="ui hidden divider"></div>
 
           <% if @tracking_form.origination_dept == current_employee.department %>
              <div class="two fields" data-sr='ease-in-out'>
                 <div class="field">
                   <label>Date Filed:</label>
-                  <%= f.text_field :date_filed, :class => 'datepicker' %>
+                  <%= f.text_field :date_filed, :class => 'datepicker', :placeholder => "Select Date" %>
                 </div>
 
                 <div class="field" data-sr='ease-in-out'>
@@ -38,7 +39,7 @@
 
               <div class="field" data-sr='ease-in-out'>
                   <label>Transaction Name</label>
-                  <%= f.text_area :transaction_name, autocomplete: "off", :class => "disabled" %>
+                  <%= f.text_area :transaction_name, autocomplete: "off", :class => "disabled", :placeholder => "Enter Transaction Name" %>
               </div>
 
               <div class="two fields" data-sr='ease-in-out'>
@@ -85,13 +86,13 @@
               <label>Amount to be claimed: <br>
                   <small>(Leave blank if not required)</small>
               </label>
-              <%= f.text_field :amount_to_be_claimed, autocomplete: "off" %>
+              <%= f.text_field :amount_to_be_claimed, autocomplete: "off", :placeholder => "Enter amount to be claimed" %>
             </div>
 
             <div class="field">
                   <div class="ui hidden divider"></div>  
                   <div class="ui hidden divider"></div>   
-                  <div class="ui checkbox">
+                  <div class="ui radio checkbox">
                       <%= f.check_box :approved_by_division_chief %>
                       <label>Approved by Division Chief</label>
                   </div>
@@ -103,7 +104,7 @@
               <label>State reason for pending <br> 
                 <small>(Leave blank if aprroved by Division Chief)</small>
               </label>
-              <%= f.text_area :pending_info, autocomplete: "off" %>
+              <%= f.text_area :pending_info, autocomplete: "off", :placeholder => "Enter Pending Information" %>
           </div>  
         
           <div class="two fields" data-sr='ease-in-out'>
@@ -132,7 +133,7 @@
             <div class="field" data-sr='ease-in-out'>
               <%= link_to('<i class="arrow circle left icon"></i> Return'.html_safe, 
                    for_return_tracking_form_path(@tracking_form.id), 
-                   :class => 'fluid ui yellow button') %>
+                   :class => 'fluid ui purple button') %>
             </div>
           <% end %>
 

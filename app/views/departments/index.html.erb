@@ -1,9 +1,13 @@
-<!-- partial nav -->
-	<%= render :partial => 'navigation' %>
-<!-- partial nav -->
-
 <div class="ui center aligned page grid">
   	<div class="sixteen column center aligned">
+
+  	   <div class="ui one item menu">
+          
+          <%= active_link_to('<i class="add circle icon"></i> Add New Department'.html_safe, 
+                              new_department_path, 
+                              :class => 'blue item') %> 
+    
+        </div>
 
      	<% if @departments.empty? %>
 
