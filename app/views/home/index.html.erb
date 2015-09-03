@@ -36,14 +36,24 @@
 			 		<% if tracking_form.received %>
 			 			<p>
 			 				<i class="blue bookmark icon"></i>
-			 				Received
+			 				Received by 
+			 					<% if tracking_form.receiver == current_employee.first_name + " " + current_employee.middle_name + " " + current_employee.last_name %>
+			 						You
+			 					<% else %>
+			 					   <%= tracking_form.receiver %>
+			 					<% end %>
 			 			</p>
 
+			 		<% elsif tracking_form.returned %>
+			 			<p>
+			 				<i class="blue arrow circle left icon"></i>
+			 				Returned 
+			 			</p>
 			 		<% elsif tracking_form.forwarded %>
 
 			 			<% if tracking_form.current_dept == current_employee.department && tracking_form.origination_dept == current_employee.department %>
 			 			<p>
-			 				<i class="send icon"></i>
+			 				<i class="blue send icon"></i>
 			 				Recently forwarded to <%= tracking_form.current_dept %>
 			 			</p>
 			 			<% elsif tracking_form.current_dept == current_employee.department %>
@@ -53,7 +63,7 @@
 			 			</p>
 			 			<% elsif tracking_form.origination_dept == current_employee.department %>
 			 			<p>
-			 				<i class="send icon"></i>
+			 				<i class="blue send icon"></i>
 			 				Forwarded to <%= tracking_form.current_dept %>
 			 			</p>
 			 			<% end %>
@@ -73,11 +83,6 @@
 			 				<i class="red ban icon"></i>
 			 				Pending
 			 			</p>
-			 		<% elsif tracking_form.returned %>
-			 			<p>
-			 				<i class="blue arrow circle left icon"></i>
-			 				Returned 
-			 			</p>
 			 		<% end %>
 			 	
 			 	</td>
@@ -88,7 +93,8 @@
 
 			 	<td class="right aligned">
 
-			 		<% if tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.forwarded %>
+			 		<% if tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.forwarded || 
+			 			  tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.returned %>
 			 			<%= link_to('Receive', receive_tracking_form_path(tracking_form.id), :method => :put, :class => 'mini ui basic blue button') %>
 			 		<% end %>
 

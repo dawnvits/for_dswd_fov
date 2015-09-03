@@ -117,24 +117,25 @@
             </div>
           </div>
 
-          <% if @tracking_form.current_dept == current_employee.department %>
+          <% if @tracking_form.current_dept == current_employee.department && !@tracking_form.forwarded && !@tracking_form.returned %>
             <div class="field" data-sr='ease-in-out'>
               <%= link_to('<i class="send icon"></i> Forward'.html_safe, 
                    for_forwarding_tracking_form_path(@tracking_form.id), 
                    :class => 'fluid ui green button') %>
             </div>
-          <% end %>
+          
+              <% if @tracking_form.origination_dept != current_employee.department && @tracking_form.received %>
+                <div class="ui horizontal divider">
+                  Or
+                </div>
 
-          <% if @tracking_form.origination_dept != current_employee.department && @tracking_form.forwarded %>
-            <div class="ui horizontal divider">
-              Or
-            </div>
+                <div class="field" data-sr='ease-in-out'>
+                  <%= link_to('<i class="arrow circle left icon"></i> Return'.html_safe, 
+                       for_return_tracking_form_path(@tracking_form.id), 
+                       :class => 'fluid ui purple button') %>
+                </div>
+              <% end %>
 
-            <div class="field" data-sr='ease-in-out'>
-              <%= link_to('<i class="arrow circle left icon"></i> Return'.html_safe, 
-                   for_return_tracking_form_path(@tracking_form.id), 
-                   :class => 'fluid ui purple button') %>
-            </div>
           <% end %>
 
       <% end %>
