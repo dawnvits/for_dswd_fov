@@ -1,5 +1,6 @@
-<div class="ui page grid">
-    <div class="sixteen wide column center aligned">
+<div class="ui grid">
+	<div class="one wide column"></div>
+    <div class="fourteen wide column center aligned">
 
     <div class="ui hidden divider"></div>
 
@@ -9,19 +10,21 @@
 
 	<div class="ui hidden divider"></div>
 
-		<div class="ui three item menu">
+		<div class="ui three item menu" data-sr='ease-in-out'>
 			<%= link_to('<i class="newspaper icon"></i> Manage Tracking Forms'.html_safe, root_path, :class => 'item') %>
 			<%= link_to('<i class="users icon"></i> Manage Employee Accounts'.html_safe, employees_path, :class => 'item') %> 
 			<%= link_to('<i class="building icon"></i> Manage Departments'.html_safe, departments_path, :class => 'item') %>
 		</div>
 
 	</div>
+	<div class="one wide column"></div>
 </div>	
 
 <div class="ui hidden divider"></div>
 
-<div class="ui page grid">
-    <div class="sixteen wide column">
+<div class="ui grid">
+	<div class="one wide column"></div>
+    <div class="fourteen wide column">
 
 	<% if @tracking_forms.empty? %>
 
@@ -36,8 +39,8 @@
 
 	<% else %>
 			
-		  <table class="ui very compact blue table" data-sr='ease-in-out'>
-			  <thead>
+		  <table class="ui very compact blue table">
+			  <thead data-sr='ease-in-out'>
 			    <tr>
 			      
 			      <th class="four wide">Status</th>
@@ -49,56 +52,32 @@
 		  	  <tbody>
 
 			 <% @tracking_forms.each do |tracking_form| %>
-			 <tr>
+			 <tr data-sr='ease-in-out'>
 
 			 	<td>
 
-			 		<% if tracking_form.received %>
-			 			<p>
-			 				<i class="blue bookmark icon"></i>
-			 				Received
-			 			</p>
-
-			 		<% elsif tracking_form.returned %>
-			 			<p>
-			 				<i class="blue arrow circle left icon"></i>
-			 				Returned 
-			 			</p>
-			 		<% elsif tracking_form.forwarded %>
-
-			 			<% if tracking_form.current_dept == current_employee.department && tracking_form.origination_dept == current_employee.department %>
-			 			<p>
-			 				<i class="blue send icon"></i>
-			 				Recently forwarded to <%= tracking_form.current_dept %>
-			 			</p>
-			 			<% elsif tracking_form.current_dept == current_employee.department %>
-			 			<p>
-			 				<i class="blue share icon"></i>
-			 				Incoming
-			 			</p>
-			 			<% elsif tracking_form.origination_dept == current_employee.department %>
-			 			<p>
-			 				<i class="blue send icon"></i>
-			 				Forwarded to <%= tracking_form.current_dept %>
-			 			</p>
-			 			<% end %>
-
-			 		<% elsif tracking_form.approved_by_division_chief %>
-			 			<p>
-			 				<i class="blue thumbs outline up icon"></i>
-			 				Approved
-			 			</p>
-			 		<% elsif !tracking_form.approved_by_division_chief && tracking_form.returned %>
-			 			<p>
-			 				<i class="red ban icon"></i>
-			 				Returned and Pending
-			 			</p>
-			 		<% elsif !tracking_form.approved_by_division_chief %>
-			 			<p>
-			 				<i class="red ban icon"></i>
-			 				Pending
-			 			</p>
-			 		<% end %>
+					<% if tracking_form.received %>
+			 				<i class="blue bookmark icon"></i>Received by 
+			 					<% if tracking_form.receiver == current_employee.first_name + " " + current_employee.middle_name + " " + current_employee.last_name %>
+			 						You
+			 					<% else %>
+			 					   <%= tracking_form.receiver %> 
+			 					<% end %>
+			 		<% elsif tracking_form.pending && tracking_form.returned %>
+							<i class="red warning icon"></i>Returned and Pending
+					<% elsif tracking_form.pending %>
+							<i class="red ban icon"></i>Pending at <%= tracking_form.current_dept %>
+					<% elsif tracking_form.returned %>
+							<i class="purple arrow circle left icon"></i>Returned
+					<% elsif tracking_form.forwarded %>
+							<i class="blue send icon"></i>Forwarded to <%= tracking_form.current_dept %>
+					<% elsif tracking_form.recently_created %>
+							<i class="blue flag outline icon"></i>New Transaction
+					<% elsif tracking_form.complete_docs %>
+							<i class="blue thumbs up icon"></i>Complete Docs
+					<% else %>
+							<i class="red warning icon"></i>Incomplete Docs
+					<% end %>
 			 	
 			 	</td>
 
@@ -129,7 +108,8 @@
 		  </table>
     <% end %>
 
-	</div><!-- 16 column -->
+	</div><!-- 14 column -->
+	<div class="one wide column"></div>
 </div><!-- grid -->
 
 <div class="ui page grid">

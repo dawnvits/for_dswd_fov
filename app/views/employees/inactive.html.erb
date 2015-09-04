@@ -2,9 +2,9 @@
 	<%= render :partial => 'navigation' %>
 <!-- partial nav -->
 
-<div class="ui page grid">
-    <div class="sixteen wide column">
-
+<div class="ui grid">
+    <div class="one wide column"></div>
+    <div class="fourteen wide column">
      	<% if @employees.empty? %>
 
 		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
@@ -63,11 +63,12 @@
 
 		<div class="ui page grid">
 
-		    <div class="sixteen wide column right aligned">
+		    <div class="sixteen wide column center aligned">
 		    	<%= will_paginate @employees,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>' %>
 		    </div><!-- 16 column -->
 
 		</div><!-- grid -->
 
-    </div><!-- 16 column -->
+    </div><!-- 14 column -->
+    <div class="one wide column"></div>
 </div><!-- grid -->

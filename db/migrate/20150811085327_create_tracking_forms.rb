@@ -25,6 +25,6 @@ class CreateTrackingForms < ActiveRecord::Migration
   end
 
   def down
-  	drop_table :form_remarks
+  	drop_table :tracking_forms
   end
 end

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tracking System</title>
+  <title>Document Tracking System</title>
   <%= favicon_link_tag 'favicon.ico' %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -41,15 +41,17 @@
 	  	
 	  	  <div class="right menu">
 
-	  	    <%= active_link_to('<i class="search icon"></i> Search'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Tracking Form', :'data-variation' => 'large') %>
-
-	  	    <%= link_to('<i class="newspaper icon"></i> Tracking Forms'.html_safe, root_path, :class => 'item', :'data-content' => 'View Tracking Forms', :'data-variation' => 'large ') %>
-
-	  		<%= active_link_to('<i class="add circle icon"></i> Add New Form'.html_safe, new_tracking_form_path, :class => 'item', :'data-content' => 'Create New Form', :'data-variation' => 'large') %>
-
-	  		<% if current_employee.admin %>
-	  			<%= link_to_unless_current('<i class="protect icon"></i> Administrator Panel'.html_safe, admin_index_path, :class => 'item', :'data-content' => 'Return to Administrator Panel', :'data-variation' => 'large ') %>
+	  	    <% if current_employee.admin %>
+	  			<%= active_link_to('<i class="world icon"></i>'.html_safe, admin_index_path, :class => 'item', :'data-content' => 'Return Home', :'data-variation' => 'large') %>
 	  		<% end %>
+
+	  	    <%= active_link_to('<i class="search icon"></i>'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Tracking Form', :'data-variation' => 'large') %>
+
+	  	    <%= active_link_to('<i class="warning icon"></i>'.html_safe, pending_tracking_forms_path, :class => 'item', :'data-content' => 'View Pending Transactions', :'data-variation' => 'large') %>
+
+	  	    <%= link_to('<i class="newspaper icon"></i>'.html_safe, root_path, :class => 'item', :'data-content' => 'View Tracking Forms', :'data-variation' => 'large ') %>
+
+	  		<%= active_link_to('<i class="add circle icon"></i>'.html_safe, new_tracking_form_path, :class => 'item', :'data-content' => 'Create New Form', :'data-variation' => 'large') %>
 
 	  		<%= active_link_to('<i class="lock icon"></i>'.html_safe, edit_employee_registration_path, :class => 'item', :'data-content' => 'Account Settings: For security purposes, please change your password every three months.', :'data-variation' => 'wide large') %>  
 

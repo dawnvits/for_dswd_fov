@@ -1,12 +1,12 @@
 class Employee < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
-         :recoverable, :trackable, :timeoutable
+         :recoverable, :trackable, :timeoutable, :timeout_in => 60.minutes
 
   validates_presence_of :first_name, 
-  						:middle_name, 
-            			:last_name, 
-            			:password, 
-            			:department, :on => :create
+  						          :middle_name, 
+            			      :last_name, 
+            			      :password, 
+            			      :department, :on => :create
 
   email_format = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
   validates :email, :presence => true, 
@@ -20,6 +20,6 @@ class Employee < ActiveRecord::Base
 
   def active_for_authentication?
 	 super && self.active?
-  end					
+  end
   
 end

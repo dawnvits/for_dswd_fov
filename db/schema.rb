@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812081058) do
+ActiveRecord::Schema.define(version: 20150903115752) do
 
   create_table "departments", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -58,25 +58,26 @@ ActiveRecord::Schema.define(version: 20150812081058) do
   add_index "form_remarks", ["tracking_form_id"], name: "index_form_remarks_on_tracking_form_id", using: :btree
 
   create_table "tracking_forms", force: :cascade do |t|
-    t.string   "uid",                        limit: 99
-    t.string   "prepared_by",                limit: 99,    default: ""
-    t.string   "department",                 limit: 55,    default: ""
-    t.string   "form_type",                  limit: 99,    default: ""
+    t.string   "uid",                 limit: 99
+    t.string   "prepared_by",         limit: 99,    default: ""
+    t.string   "department",          limit: 55,    default: ""
+    t.string   "transaction_type",    limit: 99,    default: ""
     t.date     "date_filed"
-    t.string   "origination_dept",           limit: 55,    default: ""
-    t.string   "current_dept",               limit: 55
-    t.float    "amount_to_be_claimed",       limit: 24,    default: 0.0
-    t.boolean  "recently_created",                         default: false
-    t.boolean  "forwarded",                                default: false
-    t.boolean  "returned",                                 default: false
-    t.boolean  "approved_by_division_chief",               default: false
-    t.text     "transaction_name",           limit: 65535
-    t.text     "pending_info",               limit: 65535
-    t.text     "return_notice",              limit: 65535
+    t.string   "origination_dept",    limit: 55,    default: ""
+    t.string   "current_dept",        limit: 55
+    t.float    "amount",              limit: 24,    default: 0.0
+    t.boolean  "recently_created",                  default: false
+    t.boolean  "forwarded",                         default: false
+    t.boolean  "returned",                          default: false
+    t.boolean  "complete_docs",                     default: false
+    t.text     "transaction_name",    limit: 65535
+    t.text     "pending_information", limit: 65535
+    t.text     "return_notice",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "received",                                 default: false
-    t.string   "receiver",                   limit: 255,   default: ""
+    t.boolean  "received",                          default: false
+    t.string   "receiver",            limit: 255,   default: ""
+    t.boolean  "pending",                           default: false
   end
 
 end

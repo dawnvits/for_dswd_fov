@@ -44,7 +44,7 @@
 
             <div class="field">
                 <label>Department</label>
-                    <%= f.collection_select :department, Department.order(:name), :name, :name %>
+                    <%= f.collection_select :department, Department.order(:name), :name, :name, :prompt => "Select Department" %>
             </div>
          
           </div>

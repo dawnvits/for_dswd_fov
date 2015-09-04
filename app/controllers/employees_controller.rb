@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
   before_action :verify_if_admin
   
   def index
-    @employees = Employee.sort_by_last_name.paginate(:page => params[:page], :per_page => 24)
+    @employees = Employee.sort_by_last_name.paginate(:page => params[:page], :per_page => 12)
   end
 
   def show
@@ -50,15 +50,15 @@ class EmployeesController < ApplicationController
   end
 
   def active 
-     @employees = Employee.active.sort_by_last_name.paginate(:page => params[:page], :per_page => 24)
+     @employees = Employee.active.sort_by_last_name.paginate(:page => params[:page], :per_page => 12)
   end
 
   def inactive
-    @employees = Employee.inactive.sort_by_last_name.paginate(:page => params[:page], :per_page => 24)
+    @employees = Employee.inactive.sort_by_last_name.paginate(:page => params[:page], :per_page => 12)
   end
 
   def administrators
-    @employees = Employee.administrators.sort_by_last_name.paginate(:page => params[:page], :per_page => 24)
+    @employees = Employee.administrators.sort_by_last_name.paginate(:page => params[:page], :per_page => 12)
   end
 
   private

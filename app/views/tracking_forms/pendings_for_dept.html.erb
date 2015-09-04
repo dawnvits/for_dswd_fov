@@ -1,0 +1,40 @@
+<div class="ui grid">
+	<div class="one wide column"></div>
+    <div class="fourteen wide column">
+
+	<% if @tracking_forms.empty? %>
+
+			<div class="ui hidden divider"></div>
+		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
+			  <i class="info blue icon"></i>
+			  <div class="content">
+			    Nothing found!
+			    <div class="sub header">Sorry. We didnt found anything.</div>
+			    <%= link_to('Search Again', :back, :class => 'ui button')  %>
+			  </div>
+			</h2>
+
+	<% else %>
+
+		<h2 class="ui center aligned icon header" data-sr='ease-in-out'>
+			<i class="blue circular building outline icon"></i><small>Pending Transactions for <%= @dept %></small>
+		</h2>
+
+			<div class="ui segment">
+			 <% @tracking_forms.each do |tracking_form| %>
+				<%= link_to(tracking_form.transaction_name, tracking_form_path(tracking_form.id), :class => "ui button") %>	
+			 <% end %>
+			</div>
+    <% end %>
+
+	</div><!-- 14 column -->
+	<div class="one wide column"></div>
+</div><!-- grid -->
+
+<div class="ui page grid">
+
+    <div class="sixteen wide column center aligned">
+    	<%= will_paginate @tracking_forms,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>', :'data-sr' => 'ease-in-out' %>
+    </div><!-- 16 column -->
+
+</div><!-- grid -->	

@@ -26,13 +26,15 @@
 
 	  <div class="right menu">
 
-	  	  <%= active_link_to('<i class="search icon"></i> Search'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Tracking Form', :'data-variation' => 'large') %>
+	      <%= active_link_to('<i class="world icon"></i>'.html_safe, admin_index_path, :class => 'item', :'data-content' => 'Return Home', :'data-variation' => 'large') %>
+
+	  	  <%= active_link_to('<i class="search icon"></i>'.html_safe, search_index_path, :class => 'item', :'data-content' => 'Search Tracking Form', :'data-variation' => 'large') %>
 	  		
-	  	  <%= active_link_to('<i class="users icon"></i> Employee Accounts'.html_safe, employees_path, :class => 'item', :'data-content' => 'Manage Employee Accounts', :'data-variation' => 'large ') %> 
+	  	  <%= active_link_to('<i class="users icon"></i>'.html_safe, employees_path, :class => 'item', :'data-content' => 'Manage Employee Accounts', :'data-variation' => 'large ') %> 
 
-	  	  <%= active_link_to('<i class="building icon"></i> Departments'.html_safe, departments_path, :class => 'item', :'data-content' => 'Manage Departments', :'data-variation' => 'large ') %>
+	  	  <%= active_link_to('<i class="building icon"></i>'.html_safe, departments_path, :class => 'item', :'data-content' => 'Manage Departments', :'data-variation' => 'large ') %>
 
-	  	  <%= link_to('<i class="newspaper icon"></i> Tracking Forms'.html_safe, root_path, :class => 'item', :'data-content' => 'Manage Tracking Forms', :'data-variation' => 'large ') %>
+	  	  <%= link_to('<i class="newspaper icon"></i>'.html_safe, root_path, :class => 'item', :'data-content' => 'Manage Tracking Forms', :'data-variation' => 'large ') %>
 
 	  	  <%= link_to('<i class="lock icon"></i>'.html_safe, edit_employee_registration_path, :class => 'item', :'data-content' => 'Account Settings: For security purposes, please change your password every three months.', :'data-variation' => 'wide large') %>  
 

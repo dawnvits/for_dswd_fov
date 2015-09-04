@@ -4,7 +4,7 @@ class DepartmentsController < ApplicationController
   before_action :verify_if_admin
 
   def index
-    @departments = Department.all.order(:name).paginate(:page => params[:page], :per_page => 24)
+    @departments = Department.all.order(:name).paginate(:page => params[:page], :per_page => 12)
   end
 
   def new

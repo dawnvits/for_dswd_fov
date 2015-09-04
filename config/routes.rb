@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tracking_forms,  only: [:show, :new, :create, :edit, :update, :destroy]  do
+  resources :tracking_forms, only: [:show, :new, :create, :edit, :update, :destroy]  do
     member do
       get 'delete'
       get 'for_forwarding'
@@ -38,6 +38,8 @@ Rails.application.routes.draw do
       get 'forwarded_forms'
       get 'pending_forms'
       get 'approved_forms'
+      get 'pending'
+      get 'pendings_for_dept'
     end
   end
 

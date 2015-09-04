@@ -1,4 +1,4 @@
-<div class="ui page grid">
+<div class="ui grid">
 
     <div class="ui two column center aligned grid">
   		<div class="column left aligned" data-sr='ease-in-out'>
@@ -20,7 +20,7 @@
 
         <h2 class="ui center aligned icon header">
           <i class="circular file text outline icon"></i>
-          Form Information
+          Transaction Details
         </h2>
         <div class="ui hidden divider"></div> <div class="ui hidden divider"></div>
 
@@ -31,9 +31,8 @@
               </div>
 
               <div class="field">
-                <label>Form Type</label>
-                <!-- Form Types Selection -->
-                <%= f.select :form_type, ['Travel Expense Form','Salary Form', ' Requisition Slip Form', 'Purchase Request Form', 'Disbursement Voucher Form'], :selected => 'Travel Expense Form' %>
+                <label>Type of Transaction</label>
+                <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal'], :prompt => 'Select Transaction Type' %>
               </div>
 
           </div>
@@ -44,14 +43,15 @@
           </div>
 
           <div class="two fields">
+
               <div class="field">
                 <label>Prepared By:</label>
-                <%= f.text_field :prepared_by, :value => "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name}", :maxlength => 40, :size => 40, autocomplete: "off", :placeholder => "Enter Name" %>
+                <%= f.text_field :prepared_by, :maxlength => 40, :size => 40, autocomplete: "off", :placeholder => "Enter Name" %>
               </div>
 
               <div class="field">
                 <label>Department</label>
-                    <%= f.collection_select :department, Department.order(:name), :name, :name, :selected => current_employee.department %> 
+                    <%= f.collection_select :department, Department.order(:name), :name, :name, :prompt => "Select Department" %> 
               </div>
 
           </div>
@@ -59,29 +59,38 @@
           <div class="two fields">
             
             <div class="field">
-              <label>Amount to be claimed: <br>
-                  <small>(Leave blank if not required)</small>
-              </label>
-              <%= f.text_field :amount_to_be_claimed, autocomplete: "off", :placeholder => "Enter amount to be claimed" %>
-              
+              <label>Amount</label>
+              <%= f.text_field :amount, autocomplete: "off", :placeholder => "Enter amount to be claimed" %>
             </div>
 
             <div class="field">
-                  <div class="ui hidden divider"></div> 
-                  <div class="ui hidden divider"></div> 
-                  <div class="ui radio checkbox">
-                      <%= f.check_box :approved_by_division_chief %>
-                      <label>Approved by Division Chief</label>
+
+              <div class="ui hidden divider"></div>
+
+                  <div class="inline fields">
+                    <div class="field">
+                      <div class="ui radio checkbox">
+                        <%= f.check_box :complete_docs %>
+                        <label>Complete Docs</label>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="ui radio checkbox">
+                        <%= f.check_box :pending %>
+                        <label>Pending</label>
+                      </div>
+                    </div>
                   </div>
+
             </div>
 
           </div>
 
           <div class="field">
               <label>State reason for pending <br> 
-                <small>(Leave blank if aprroved by Division Chief)</small>
               </label>
-              <%= f.text_area :pending_info, autocomplete: "off", :placeholder => "Enter Pending Information" %>
+              <%= f.text_area :pending_information, autocomplete: "off", :placeholder => "Enter Pending Information" %>
           </div>
           
           <div class="two fields">

@@ -1,7 +1,8 @@
-<div class="ui center aligned page grid">
-  	<div class="sixteen column center aligned">
+<div class="ui grid">
+	<div class="one wide column"></div>
+  	<div class="fourteen wide column center aligned">
 
-  	   <div class="ui one item menu">
+  	   <div class="ui one item menu" data-sr='ease-in-out'>
           
           <%= active_link_to('<i class="add circle icon"></i> Add New Department'.html_safe, 
                               new_department_path, 
@@ -49,12 +50,13 @@
 
 		<div class="ui page grid">
 
-		    <div class="sixteen wide column right aligned">
+		    <div class="sixteen wide column center aligned">
 		    	<%= will_paginate @departments,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>' %>
 		    </div><!-- 16 column -->
 
 		</div><!-- grid -->
 
 
-    </div><!-- 16 column -->
+    </div><!-- 14 column -->
+    <div class="one wide column"></div>
 </div><!-- grid -->

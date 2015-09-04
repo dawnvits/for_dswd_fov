@@ -1,0 +1,16 @@
+<div class="ui hidden divider"></div>
+<center>
+
+	<h2 class="ui center aligned icon header" data-sr='ease-in-out'>
+		<i class="circular building outline icon"></i>
+	</h2>
+
+	<%= form_tag(pendings_for_dept_tracking_forms_path, :method => "get" ,:class => 'ui form') do |f| %>
+			<div class="inline field" data-sr='ease-in-out'>
+				<i class="blue search icon"></i>
+				<%= collection_select :department, :name, Department.order(:name), :name, :name, {:prompt => "Select Department"} %>
+				<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
+			</div>
+	<% end %>
+
+</center>

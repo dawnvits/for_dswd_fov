@@ -15,7 +15,7 @@
 							  <div class="content">
 							    Form Information
 							  </div>
-							  	<% if @tracking_form.origination_dept == current_employee.department || current_employee.admin %>
+							  	<% if @tracking_form.current_dept == current_employee.department || current_employee.admin %>
 							  		<%= link_to('Manage Form', edit_tracking_form_path(@tracking_form.id), :class => 'ui button', :'data-sr' => 'ease-in') %>
 							  	<% end %>
 
@@ -29,17 +29,17 @@
 							
 							<div class="ui relaxed list" data-sr='ease-in'>	
 
-							  <div class="item" data-sr='ease-in'>   
+ 							 <div class="item" data-sr='ease-in'>   
 							    <div class="content">
-							      <div class="header"> <%= @tracking_form.form_type %> Date of Filing: </div>
-							      <div class="description"><%= @tracking_form.date_filed.strftime('%B %d, %Y') %></div>
+							      <div class="header">Transaction Age </div>
+							      <div class="description"><em>created <%= time_ago_in_words(@tracking_form.created_at) %> ago</em></div>
 							    </div>
 							  </div>
 
 							  <div class="item" data-sr='ease-in'>   
 							    <div class="content">
-							      <div class="header"> Form UID </div>
-							      <div class="description"><%= @tracking_form.uid %></div>
+							      <div class="header"> Transaction Number </div>
+							      <div class="description"><%= @tracking_form.id %></div>
 							    </div>
 							  </div>
 			
@@ -50,11 +50,18 @@
 							    </div>
 							  </div>
 
-							  <% if @tracking_form.amount_to_be_claimed != 0 %>
+							  <div class="item" data-sr='ease-in'>   
+							    <div class="content">
+							      <div class="header"> <%= @tracking_form.transaction_type %> Date of Filing: </div>
+							      <div class="description"><%= @tracking_form.date_filed.strftime('%B %d, %Y') %></div>
+							    </div>
+							  </div>
+
+							  <% if @tracking_form.amount != 0 %>
 							  	<div class="item" data-sr='ease-in'>   
 								    <div class="content">
-								      <div class="header">Amount to be claimed:</div>
-								      <div class="description"> <%= number_with_precision(@tracking_form.amount_to_be_claimed, precision: 2) %></div>
+								      <div class="header">Amount:</div>
+								      <div class="description"> <%= number_with_precision(@tracking_form.amount, precision: 2) %></div>
 								    </div>
 								</div>
 							  <% end %>
@@ -68,30 +75,49 @@
 
 							  <div class="item" data-sr='ease-in'>   
 							    <div class="content">
-							    	<div class="header">Status: </div>
-							     	<% if !@tracking_form.approved_by_division_chief && @tracking_form.returned %>
-									    <div class="description">Returned and Pending </div>
-									    <div class="ui inverted red segment">
-									    	Pending due to:
-									    	<%= @tracking_form.pending_info %> 
-									    </div>
-									     <div class="ui inverted red segment">
-									     	Returned due to:
-									    	<%= @tracking_form.return_notice %> 
-									    </div>
-									<% elsif !@tracking_form.approved_by_division_chief %>
-									    <div class="description">Pending </div>
-									    <div class="ui inverted blue segment">
-									    	<%= @tracking_form.pending_info %> 
-									    </div>
+							    	<div class="header">Status:</div>
+							     	<% if @tracking_form.pending && @tracking_form.returned %>
+									    <div class="description">Returned and Pending</div>
+									   	<div class="ui compact teal message">
+										  <div class="content">
+										    <div class="header">
+										       Pending due to:
+										    </div>
+										    <p><%= @tracking_form.pending_information %></p>
+										  </div>
+										</div>
+									    <div class="ui compact teal message">
+										  <div class="content">
+										    <div class="header">
+										       Returned due to:
+										    </div>
+										    <p> <%= @tracking_form.return_notice %></p>
+										  </div>
+										</div>
+									<% elsif @tracking_form.pending %>
+									    <div class="description">Pending at <%= @tracking_form.current_dept %></div>
+										<div class="ui compact teal message">
+										  <div class="content">
+										    <div class="header">
+										       Pending due to:
+										    </div>
+										    <p><%= @tracking_form.pending_information %></p>
+										  </div>
+										</div>
 									<% elsif @tracking_form.returned %>
-									    <div class="description">Returned</div>
-									    <div class="ui inverted red segment">
-									    	Returned due to:
-									    	<%= @tracking_form.return_notice %> 
-									    </div>
-									<% elsif @tracking_form.approved_by_division_chief %>
-									    <div class="description">Approved </div>
+									    <div class="description">Returned at <%= @tracking_form.current_dept %></div>
+									    <div class="ui compact teal message">
+										  <div class="content">
+										    <div class="header">
+										       Returned due to:
+										    </div>
+										    <p> <%= @tracking_form.return_notice %></p>
+										  </div>
+										</div>
+									<% elsif @tracking_form.complete_docs %>
+									    <div class="description">Complete Docs</div>
+									<% else %>
+										<div class="description">Incomplete Docs</div>
 									<% end %>
 							    </div>
 							  </div>
@@ -100,20 +126,18 @@
 							<div class="ui hidden divider"></div>
 
 							<h2 class="ui icon header center aligned" data-sr='ease-in'>
-							  
 							  <i class="comments outline icon"></i>
 							  <div class="content">
 							    Remarks
 							  </div>
 
-							  <% if @tracking_form.origination_dept == current_employee.department || current_employee.admin %>
+							  <% if @tracking_form.current_dept == current_employee.department || current_employee.admin %>
 							  		<%= link_to('Add Remark', add_remark_tracking_form_path(@tracking_form.id), :class => 'ui button') %>
 							  <% end %>
 
-							  
-
 							</h2>
 
+							<% if !@remark.empty? %>
 							<div class="ui relaxed divided list">
 								<% @remark.each do |remark| %>
 								  <div class="item" data-sr='ease-in'>   
@@ -127,7 +151,12 @@
 								    </div>
 								  </div>
 								<% end %>
-							</div>					
+							</div>
+							<% else %>
+								<div class="description" data-sr='ease-in'>
+									<em>There are no remarks for this transaction</em>
+								</div>
+							<% end %>					
 			  			</div><!-- eight column -->
 
 			  			<div class="eight wide column">
@@ -159,7 +188,7 @@
 							<div class="ui relaxed list">
 								<div class="item" data-sr='ease-in'>   
 								    <div class="content">
-								      <div class="header"><%= @tracking_form.form_type %> Current Department:</div>
+								      <div class="header"><%= @tracking_form.transaction_type %> Current Department:</div>
 								       <div class="description"><em><%= @tracking_form.current_dept %></em></div>
 								    </div>
 							    </div>

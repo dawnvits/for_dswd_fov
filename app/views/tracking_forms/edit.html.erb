@@ -20,11 +20,10 @@
 
         <h2 class="ui center aligned icon header">
           <i class="circular file text outline icon"></i>
-          Form Information
+           Transaction Details
         </h2>
         <div class="ui hidden divider"></div> <div class="ui hidden divider"></div>
 
-          <% if @tracking_form.origination_dept == current_employee.department %>
              <div class="two fields" data-sr='ease-in-out'>
                 <div class="field">
                   <label>Date Filed:</label>
@@ -33,7 +32,7 @@
 
                 <div class="field" data-sr='ease-in-out'>
                   <label>Form Type</label>
-                  <%= f.select :form_type, ['Travel Expense Form','Salary Form', 'Purchase Request Form', 'Disbursement Voucher Form', ' Requisition Slip Form'], :selected => f.object.form_type %>
+                  <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal'], :selected => f.object.transaction_type %>
                 </div>
               </div>
 
@@ -52,59 +51,42 @@
                     <label>Department</label>
                     <%= f.collection_select :department, Department.order(:name), :name, :name, {:prompt => @select_value, :selected => @tracking_form.department} %>
                   </div>
-              </div>
-          <% else %>
-            <div class="two fields" data-sr='ease-in-out'>
-                <div class="field">
-                  <label>Date Filed:</label>
-                  <p><%= @tracking_form.date_filed %></p>
-                </div>
-
-                <div class="field" data-sr='ease-in-out'>
-                  <label>Form Type</label>
-                  <p><%= @tracking_form.form_type%></p>
-                </div>
-              </div>
-
-              <div class="two fields">
-                <div class="field" data-sr='ease-in-out'>
-                    <label>Transaction Name</label>
-                    <p><%= @tracking_form.transaction_name %></p>
-                </div>
-                 
-                <div class="field">
-                    <label>Prepared By:</label> 
-                    <p><%= @tracking_form.prepared_by %> of <%= @tracking_form.department %></p>
-                </div>
-              </div>
-              <div class="ui hidden divider"></div>
-          <% end %>     
+              </div>    
 
           <div class="two fields" data-sr='ease-in-out'>
             
-            <div class="field">
-              <label>Amount to be claimed: <br>
-                  <small>(Leave blank if not required)</small>
-              </label>
-              <%= f.text_field :amount_to_be_claimed, autocomplete: "off", :placeholder => "Enter amount to be claimed" %>
-            </div>
+              <div class="field">
+                <label>Amount:</label>
+                <%= f.text_field :amount, autocomplete: "off", :placeholder => "Enter amount to be claimed" %>
+              </div>
 
-            <div class="field">
-                  <div class="ui hidden divider"></div>  
-                  <div class="ui hidden divider"></div>   
-                  <div class="ui radio checkbox">
-                      <%= f.check_box :approved_by_division_chief %>
-                      <label>Approved by Division Chief</label>
-                  </div>
-            </div>
+              <div class="field">
+            
+                <div class="ui hidden divider"></div>
 
-          </div>
+                    <div class="inline fields">
+                      <div class="field">
+                        <div class="ui radio checkbox">
+                          <%= f.check_box :complete_docs %>
+                          <label>Complete Docs</label>
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <div class="ui radio checkbox">
+                          <%= f.check_box :pending %>
+                          <label>Pending</label>
+                        </div>
+                      </div>
+                    </div>
+
+              </div>
+
+          </div><!-- two fields -->
 
           <div class="field" data-sr='ease-in-out'>
-              <label>State reason for pending <br> 
-                <small>(Leave blank if aprroved by Division Chief)</small>
-              </label>
-              <%= f.text_area :pending_info, autocomplete: "off", :placeholder => "Enter Pending Information" %>
+              <label>State reason for pending</label>
+              <%= f.text_area :pending_information, autocomplete: "off", :placeholder => "Enter Pending Information" %>
           </div>  
         
           <div class="two fields" data-sr='ease-in-out'>
@@ -117,7 +99,7 @@
             </div>
           </div>
 
-          <% if @tracking_form.current_dept == current_employee.department && !@tracking_form.forwarded && !@tracking_form.returned %>
+          <% if !@tracking_form.pending && @tracking_form.current_dept == current_employee.department && !@tracking_form.forwarded && !@tracking_form.returned %>
             <div class="field" data-sr='ease-in-out'>
               <%= link_to('<i class="send icon"></i> Forward'.html_safe, 
                    for_forwarding_tracking_form_path(@tracking_form.id), 

@@ -149,18 +149,28 @@ class TrackingFormsController < ApplicationController
     redirect_to tracking_form_url(@tracking_form.id)
   end
 
+  def pending
+    
+  end
+
+  def pendings_for_dept
+     @tracking_forms = TrackingForm.all.pending.where("current_dept = ?", params[:department][:name]).paginate(:page => params[:page], :per_page => 50)
+     @dept = params[:department][:name]
+  end
+
 
   protected
 
   def tracking_form_params
     params.require(:tracking_form).permit(:date_filed, 
                                           :transaction_name,
-                                          :form_type,
+                                          :transaction_type,
                                           :department,
-                                          :approved_by_division_chief,
-                                          :amount_to_be_claimed,
+                                          :complete_docs,
+                                          :amount,
                                           :prepared_by,
-                                          :pending_info)
+                                          :pending,
+                                          :pending_information)
   end
   
 end

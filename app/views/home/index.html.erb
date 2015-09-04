@@ -1,7 +1,8 @@
 <div class="ui hidden divider"></div>
 
-<div class="ui page grid">
-    <div class="sixteen wide column">
+<div class="ui grid">
+	<div class="one wide column"></div>
+    <div class="fourteen wide column">
 
 	<% if @tracking_forms.empty? %>
 
@@ -16,96 +17,58 @@
 
 	<% else %>
 			
-		  <table class="ui very compact blue table" data-sr='ease-in-out'>
-			  <thead>
+		  <table class="ui very compact blue table">
+			  <thead data-sr='ease-in-out'>
 			    <tr>
-			      
-			      <th class="four wide">Status</th>
-			      <th class="eight wide center aligned">Transaction Name</th>
-			      <th class="four wide"></th>
+			  
+			      <th class="four wide">STATUS</th>
+			      <th class="ten wide">TRANSACTION NAME</th>
+			      <th class="two wide"></th>
 			      
 			    </tr>
 			  </thead>
 		  	  <tbody>
 
 			 <% @tracking_forms.each do |tracking_form| %>
-			 <tr>
+			 <tr data-sr='ease-in-out'>
 
 			 	<td>
-
 			 		<% if tracking_form.received %>
-			 			<p>
-			 				<i class="blue bookmark icon"></i>
-			 				Received by 
+			 				<i class="blue bookmark icon"></i>Received by 
 			 					<% if tracking_form.receiver == current_employee.first_name + " " + current_employee.middle_name + " " + current_employee.last_name %>
 			 						You
 			 					<% else %>
-			 					   <%= tracking_form.receiver %>
+			 					   <%= tracking_form.receiver %> 
 			 					<% end %>
-			 			</p>
-
-			 		<% elsif tracking_form.returned %>
-			 			<p>
-			 				<i class="blue arrow circle left icon"></i>
-			 				Returned 
-			 			</p>
-			 		<% elsif tracking_form.forwarded %>
-
-			 			<% if tracking_form.current_dept == current_employee.department && tracking_form.origination_dept == current_employee.department %>
-			 			<p>
-			 				<i class="blue send icon"></i>
-			 				Recently forwarded to <%= tracking_form.current_dept %>
-			 			</p>
-			 			<% elsif tracking_form.current_dept == current_employee.department %>
-			 			<p>
-			 				<i class="blue share icon"></i>
-			 				Incoming
-			 			</p>
-			 			<% elsif tracking_form.origination_dept == current_employee.department %>
-			 			<p>
-			 				<i class="blue send icon"></i>
-			 				Forwarded to <%= tracking_form.current_dept %>
-			 			</p>
-			 			<% end %>
-
-			 		<% elsif tracking_form.approved_by_division_chief %>
-			 			<p>
-			 				<i class="blue thumbs outline up icon"></i>
-			 				Approved
-			 			</p>
-			 		<% elsif !tracking_form.approved_by_division_chief && tracking_form.returned %>
-			 			<p>
-			 				<i class="red ban icon"></i>
-			 				Returned and Pending
-			 			</p>
-			 		<% elsif !tracking_form.approved_by_division_chief %>
-			 			<p>
-			 				<i class="red ban icon"></i>
-			 				Pending
-			 			</p>
-			 		<% end %>
+			 		<% elsif tracking_form.pending && tracking_form.returned %>
+							<i class="red warning icon"></i>Returned and Pending
+					<% elsif tracking_form.pending %>
+							<i class="red ban icon"></i>Pending at <%= tracking_form.current_dept %>
+					<% elsif tracking_form.returned %>
+							<i class="purple arrow circle left icon"></i>Returned
+					<% elsif tracking_form.forwarded %>
+							<i class="blue send icon"></i>Forwarded to <%= tracking_form.current_dept %>
+					<% elsif tracking_form.recently_created %>
+							<i class="blue flag outline icon"></i>New Transaction
+					<% elsif tracking_form.complete_docs %>
+							<i class="blue thumbs up icon"></i>Complete Docs
+					<% else %>
+							<i class="red warning icon"></i>Incomplete Docs
+					<% end %>
 			 	
 			 	</td>
 
-			 	<td class="center aligned"> 
-			 		<%= tracking_form.transaction_name %>	
+			  	<td> 
+			  		<%= link_to(tracking_form.transaction_name, tracking_form_path(tracking_form.id), :class => "ui basic blue button") %>	
 			 	</td>
 
-			 	<td class="right aligned">
+			    <td class="right aligned">
 
 			 		<% if tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.forwarded || 
 			 			  tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.returned %>
-			 			<%= link_to('Receive', receive_tracking_form_path(tracking_form.id), :method => :put, :class => 'mini ui basic blue button') %>
+			 			<%= link_to('Receive', receive_tracking_form_path(tracking_form.id), :method => :put, :class => 'ui mini primary button') %>
 			 		<% end %>
 
-			 		<%= link_to('View', 
-			 					tracking_form_path(tracking_form.id), 
-			 					:class => 'mini ui basic blue button') %>
-
-			      	<%= link_to('Delete', 
-			      				delete_tracking_form_path(tracking_form.id), 
-			      				:class => 'mini ui basic red button') %>
-			 	
 			 	</td>
 
 			 </tr>
@@ -114,7 +77,8 @@
 		  </table>
     <% end %>
 
-	</div><!-- 16 column -->
+	</div><!-- 14 column -->
+	<div class="one wide column"></div>
 </div><!-- grid -->
 
 <div class="ui page grid">
