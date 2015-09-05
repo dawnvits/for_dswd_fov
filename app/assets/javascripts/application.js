@@ -111,7 +111,7 @@ $(document).ready(function(){
 	    },
 
 	    amount_to_be_claimed: {
-	      identifier  : 'tracking_form[amount_to_be_claimed]',
+	      identifier  : 'tracking_form[amount]',
 	      rules: [
 	        {
 	          type   : 'empty',
@@ -153,7 +153,7 @@ $(document).ready(function(){
 	          type   : 'empty',
 	        }
 	      ]
-	    }
+	    },
 
 
 	})

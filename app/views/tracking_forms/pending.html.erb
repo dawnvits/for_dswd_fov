@@ -1,22 +1,4 @@
 <div class="ui hidden divider"></div>
-<center>
-
-	<h3 class="ui center aligned icon header" data-sr='ease-in-out'>
-		<i class="circular building outline icon"></i> <small>All Pending Transactions</small>
-	</h3>
-
-	<%= form_tag(pendings_for_dept_tracking_forms_path, :method => "get" ,:class => 'ui form') do |f| %>
-			<div class="inline field" data-sr='ease-in-out'>
-				<i class="blue search icon"></i>
-				<%= collection_select :department, :name, Department.order(:name), :name, :name, {:prompt => "Search Pending Transactions by Department"} %>
-				<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
-			</div>
-	<% end %>
-
-</center>
-
-<div class="ui hidden divider"></div>
-
 <div class="ui grid">
 	<div class="one wide column"></div>
     <div class="fourteen wide column">
@@ -25,14 +7,29 @@
 
 			<div class="ui hidden divider"></div>
 		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
-			  <i class="info teal icon"></i>
+			  <i class="info blue icon"></i>
 			  <div class="content">
 			    Nothing found!
-			    <div class="sub header">Sorry. We didnt found any forms for your department.</div>
+			    <div class="sub header">Sorry. We didnt found any pending transactions.</div>
 			  </div>
 			</h2>
 
 	<% else %>
+	<center>
+
+		<h3 class="ui center aligned icon header" data-sr='ease-in-out'>
+			<i class="circular building outline icon"></i> <small>All Pending Transactions</small>
+		</h3>
+
+		<%= form_tag(pendings_for_dept_tracking_forms_path, :method => "get" ,:class => 'ui form') do |f| %>
+				<div class="inline field" data-sr='ease-in-out'>
+					<i class="blue search icon"></i>
+					<%= collection_select :department, :name, Department.order(:name), :name, :name, {:prompt => "Search Pending Transactions by Department"} %>
+					<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
+				</div>
+		<% end %>
+
+	</center>
 			
 		  <table class="ui very compact blue table">
 			  <thead data-sr='ease-in-out'>
