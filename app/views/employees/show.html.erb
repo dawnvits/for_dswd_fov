@@ -36,45 +36,45 @@
 
     <div class="five wide column center aligned">
 
-    	<h4>Name</h4>
-		<p><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></p>
+    	<h3>Name</h3>
+		<p><em><%= @employee.first_name %> <%= @employee.middle_name %> <%= @employee.last_name %></p></em>
 
 
-		<h4>Email</h4>
-		<p><%= @employee.email %></p>
+		<h3>Email</h3>
+		<p><em><%= @employee.email %></em></p>
 
 		<% if !@employee.department.empty? %>
-    		<h4>Department</h4>
-			<p><%= @employee.department %></p>
+    		<h3>Department</h3>
+			<p><em><%= @employee.department %></em></p>
 		<% end %>
 		
     </div>
 
     <div class="five wide column center aligned">
 
-		<h4>Created at</h4>
+		<h3>Created at</h3>
 		
 		<% if @employee.created_at? %>
-		 	<p><%= @employee.created_at.strftime('%B %d, %Y @ %I: %M %p') %> </p>
+		 	<p><em><%= @employee.created_at.strftime('%B %d, %Y @ %I: %M %p') %></em></p>
 		<% else %>
-			<p>Not Available</p>
+			<p><em>Not Available</em></p>
 		<% end %>
 
-		<h4>Last Login</h4>
+		<h3>Last Login</h3>
 
 		<% if @employee.current_sign_in_at? %>
 	
 			<p>
 				<% if @employee.sign_in_count? %>
-					<span class="ui circular yellow label">
+					<span class="ui circular teal label">
 				     <%= @employee.sign_in_count %>
 				    </span>
 			    <% end %>
-			    <%= @employee.current_sign_in_at.strftime('%B %d, %Y @ %I: %M %p') %>
+			    <em><%= @employee.current_sign_in_at.strftime('%B %d, %Y @ %I: %M %p') %></em>
 			</p>
 
 		<% else %>
-			<p>Not Available</p>
+			<p><em>Not Available</em></p>
 		<% end %>
 
     </div>
@@ -83,3 +83,4 @@
     </div>
     
 </div><!-- ui grid -->
+<div class="ui hidden divider"></div>

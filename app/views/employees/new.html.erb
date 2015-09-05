@@ -3,7 +3,7 @@
 <div class="ui page grid">
 
     <div class="ui two column center aligned grid">
-  		<div class="column left aligned" data-sr='scale up 20%'>
+  		<div class="column left aligned" data-sr='ease-in-out'>
 
   			<h2 class="ui icon header center aligned">
 			    <i class="file text outline icon"></i>
@@ -52,7 +52,7 @@
                     <%= f.collection_select :department, 
                                             Department.order(:name), 
                                             :name, :name, 
-                                            {}, {} %> 
+                                            :prompt => "Select Department" %> 
                 
             </div>
           </div>

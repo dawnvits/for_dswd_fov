@@ -162,7 +162,7 @@ $(document).ready(function(){
   		$(this).closest('.ui.message').fadeOut();
 	});
 
-	$('.item').popup();
+	$('.item').popup(); $('.hv').popup();
 	
 	$('.ui.checkbox').checkbox();
 	

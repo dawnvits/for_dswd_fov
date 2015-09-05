@@ -1,4 +1,4 @@
-<div class="ui page grid">
+<div class="ui grid">
 
     <div class="ui two column center aligned grid">
       <div class="column left aligned">
@@ -18,7 +18,7 @@
           </div>
         <% end %>
 
-        <h2 class="ui center aligned icon header">
+        <h2 class="ui center aligned icon header" data-sr='ease-in-out'>
           <i class="circular file text outline icon"></i>
            Transaction Details
         </h2>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="field" data-sr='ease-in-out'>
-                  <label>Form Type</label>
+                  <label>Type of Transaction</label>
                   <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal'], :selected => f.object.transaction_type %>
                 </div>
               </div>

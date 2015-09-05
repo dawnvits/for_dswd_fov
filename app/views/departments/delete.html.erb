@@ -2,7 +2,7 @@
     <div class="sixteen wide column">
     	<div class="ui hidden divider"></div>
     	<h2 class="ui icon header">
-			<i class="circular active teal help icon"></i>
+			<i class="circular active blue help icon"></i>
 			<div class="content">
 				Are you sure you want to permanently <br> delete this department?
 			</div>
@@ -12,7 +12,7 @@
 
     <div class="sixteen wide columns">
     	<div class="ui buttons">
-    			<%= link_to('Yes', department_path(@department.id), :method => :delete, :class => 'ui red large button') %>
+    			<%= link_to('Yes', department_path(@department.id), :method => :delete, :class => 'ui black large button') %>
 				<div class="or"></div>
 				<%= link_to('No', :back, :class => 'ui large button')  %>
 		</div>

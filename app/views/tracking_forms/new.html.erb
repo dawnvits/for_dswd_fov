@@ -1,7 +1,7 @@
 <div class="ui grid">
 
     <div class="ui two column center aligned grid">
-  		<div class="column left aligned" data-sr='ease-in-out'>
+  		<div class="column left aligned">
 
     	<%= form_for @tracking_form, :html => { :class => "ui form attached fluid segment" } do |f| %>
 
@@ -18,7 +18,7 @@
   			  </div>
 		    <% end %>
 
-        <h2 class="ui center aligned icon header">
+        <h2 class="ui center aligned icon header" data-sr='ease-in-out'>
           <i class="circular file text outline icon"></i>
           Transaction Details
         </h2>
