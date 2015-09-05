@@ -10,21 +10,71 @@
 			  <div class="content">
 			    Nothing found!
 			    <div class="sub header">Sorry. We didnt found anything.</div>
-			    <%= link_to('Search Again', :back, :class => 'ui button')  %>
+			     <%= link_to('Search Again', :back, :class => 'ui button')  %>
 			  </div>
 			</h2>
 
 	<% else %>
 
-		<h2 class="ui center aligned icon header" data-sr='ease-in-out'>
-			<i class="blue circular building outline icon"></i><small>Pending Transactions for <%= @dept %></small>
-		</h2>
+		<h3 class="ui center aligned icon header" data-sr='ease-in-out'>
+			<i class="circular building outline icon"></i><small>Pending Transactions for <%= @dept %></small>
+			<div class="content">
+			     <%= link_to('Search Another Department', :back, :class => 'ui primary button')  %>
+			 </div>
+		</h3>
+			
+		  <table class="ui very compact blue table">
+			  <thead data-sr='ease-in-out'>
+			    <tr>
+			  
+			      <th class="four wide">Department</th>
+			      <th class="eight wide">Transaction Name</th>
+			      <th class="two wide center aligned">Status</th>
+			      <th class="two wide center aligned">Transaction Age</th>
+			      
+			    </tr>
+			  </thead>
+		  	  <tbody>
 
-			<div class="ui segment">
 			 <% @tracking_forms.each do |tracking_form| %>
-				<%= link_to(tracking_form.transaction_name, tracking_form_path(tracking_form.id), :class => "ui button") %>	
-			 <% end %>
-			</div>
+			 <tr data-sr='ease-in-out'>
+
+			 	<td>
+			 		<%= tracking_form.current_dept %>
+			 	</td>
+
+			  	<td> 
+			  		<%= link_to(tracking_form.transaction_name, tracking_form_path(tracking_form.id), :class => "ui basic blue button") %>	
+			 	</td>
+
+			 	<td class="center aligned">
+			 		<% if tracking_form.received %>
+			 				Received by 
+			 					<% if tracking_form.receiver == current_employee.first_name + " " + current_employee.middle_name + " " + current_employee.last_name %>
+			 						You
+			 					<% else %>
+			 					   <%= tracking_form.receiver %> 
+			 					<% end %>
+			 		<% elsif tracking_form.pending && tracking_form.returned %>
+							Returned and Pending
+					<% elsif tracking_form.pending %>
+							Pending
+					<% elsif tracking_form.complete_docs %>
+							Complete Docs
+					<% else %>
+							Incomplete Docs
+					<% end %>
+			 	</td>
+
+			    <td class="center aligned">
+			 		<em>Created <%= time_ago_in_words(tracking_form.created_at) %> ago</em>
+			 	</td>
+
+			 </tr>
+
+		  	 </tbody>
+		  </table>
+    <% end %>
     <% end %>
 
 	</div><!-- 14 column -->

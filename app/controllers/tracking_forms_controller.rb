@@ -150,7 +150,7 @@ class TrackingFormsController < ApplicationController
   end
 
   def pending
-    
+     @tracking_forms = TrackingForm.all.pending.paginate(:page => params[:page], :per_page => 30)
   end
 
   def pendings_for_dept

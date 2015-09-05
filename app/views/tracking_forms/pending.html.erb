@@ -1,16 +1,109 @@
 <div class="ui hidden divider"></div>
 <center>
 
-	<h2 class="ui center aligned icon header" data-sr='ease-in-out'>
-		<i class="circular building outline icon"></i>
-	</h2>
+	<h3 class="ui center aligned icon header" data-sr='ease-in-out'>
+		<i class="circular building outline icon"></i> <small>All Pending Transactions</small>
+	</h3>
 
 	<%= form_tag(pendings_for_dept_tracking_forms_path, :method => "get" ,:class => 'ui form') do |f| %>
 			<div class="inline field" data-sr='ease-in-out'>
 				<i class="blue search icon"></i>
-				<%= collection_select :department, :name, Department.order(:name), :name, :name, {:prompt => "Select Department"} %>
+				<%= collection_select :department, :name, Department.order(:name), :name, :name, {:prompt => "Search Pending Transactions by Department"} %>
 				<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
 			</div>
 	<% end %>
 
 </center>
+
+<div class="ui hidden divider"></div>
+
+<div class="ui grid">
+	<div class="one wide column"></div>
+    <div class="fourteen wide column">
+
+	<% if @tracking_forms.empty? %>
+
+			<div class="ui hidden divider"></div>
+		  	<h2 class="ui icon header center aligned" data-sr='scale up 20%'>
+			  <i class="info teal icon"></i>
+			  <div class="content">
+			    Nothing found!
+			    <div class="sub header">Sorry. We didnt found any forms for your department.</div>
+			  </div>
+			</h2>
+
+	<% else %>
+			
+		  <table class="ui very compact blue table">
+			  <thead data-sr='ease-in-out'>
+			    <tr>
+			  
+			      <th class="four wide">Department</th>
+			      <th class="eight wide">Transaction Name</th>
+			      <th class="two wide center aligned">Status</th>
+			      <th class="two wide center aligned">Transaction Age</th>
+			      
+			    </tr>
+			  </thead>
+		  	  <tbody>
+
+			 <% @tracking_forms.each do |tracking_form| %>
+			 <tr data-sr='ease-in-out'>
+
+			 	<td>
+			 		<%= tracking_form.current_dept %>
+			 	</td>
+
+			  	<td> 
+			  		<%= link_to(tracking_form.transaction_name, tracking_form_path(tracking_form.id), :class => "ui basic blue button") %>	
+			 	</td>
+
+			 	<td class="center aligned">
+			 		<% if tracking_form.received %>
+			 				Received by 
+			 					<% if tracking_form.receiver == current_employee.first_name + " " + current_employee.middle_name + " " + current_employee.last_name %>
+			 						You
+			 					<% else %>
+			 					   <%= tracking_form.receiver %> 
+			 					<% end %>
+			 		<% elsif tracking_form.pending && tracking_form.returned %>
+							Returned and Pending
+					<% elsif tracking_form.pending %>
+							Pending
+					<% elsif tracking_form.returned %>
+							Returned
+					<% elsif tracking_form.forwarded %>
+							Forwarded to <%= tracking_form.current_dept %>
+					<% elsif tracking_form.recently_created %>
+							New Transaction
+					<% elsif tracking_form.complete_docs %>
+							Complete Docs
+					<% else %>
+							Incomplete Docs
+					<% end %>
+			 	
+			 	</td>
+
+			    <td class="center aligned">
+
+			 		<em>Created <%= time_ago_in_words(tracking_form.created_at) %> ago</em>
+
+			 	</td>
+
+			 </tr>
+			 <% end %>
+		  	 </tbody>
+		  </table>
+    <% end %>
+
+	</div><!-- 14 column -->
+	<div class="one wide column"></div>
+</div><!-- grid -->
+
+<div class="ui page grid">
+
+    <div class="sixteen wide column center aligned">
+    	<%= will_paginate @tracking_forms,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>', :'data-sr' => 'ease-in-out' %>
+    </div><!-- 16 column -->
+
+</div><!-- grid -->
