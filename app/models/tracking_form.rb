@@ -15,6 +15,7 @@ class TrackingForm < ActiveRecord::Base
                   			:current_dept
 
   validates_presence_of :pending_information, :if => :pending, :on => [ :create, :update ]
+  validates_absence_of :complete_docs, :if => :pending, :on => [ :create, :update ]
   validates_absence_of :pending_information, :unless => :pending
 
   scope :pending, lambda { where(:pending => true) }

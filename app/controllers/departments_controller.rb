@@ -12,7 +12,7 @@ class DepartmentsController < ApplicationController
   end
 
   def create
-    @department = Department.new( params.require(:department).permit(:name) )
+    @department = Department.new( params.require(:department).permit(:name))
     if @department.save
       flash[:notice] = "Department created successfully!"
       redirect_to departments_url
@@ -23,13 +23,23 @@ class DepartmentsController < ApplicationController
 
   def edit
     @department = Department.find(params[:id])
+    @employees = Employee.all.where(department: @department.name)
   end
 
   def update
     @department = Department.find(params[:id])
-    if @department.update_attributes( params.require(:department).permit(:name) )
-      flash[:notice] = "Department updated successfully!"
-      redirect_to departments_path
+    prev_dept = @department.name
+    if @department.update_attributes(params.require(:department).permit(:name))
+      if @department.save
+        Employee.where(department: prev_dept).update_all(department: @department.name)
+        TrackingForm.where(current_dept: prev_dept).update_all(current_dept: @department.name)
+        TrackingForm.where(origination_dept: prev_dept).update_all(origination_dept: @department.name)
+        flash[:notice] = "Department updated successfully!"
+        redirect_to departments_path
+      else
+        render('edit')
+        flash[:notice] = "Department is not updated"
+      end
     else
       render('edit')
     end

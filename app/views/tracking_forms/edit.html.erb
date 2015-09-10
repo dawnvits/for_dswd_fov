@@ -1,7 +1,6 @@
 <div class="ui grid">
-
-    <div class="ui two column center aligned grid">
-      <div class="column left aligned">
+  <div class="two wide column"></div>
+    <div class="twelve wide column">
 
       <%= form_for @tracking_form, :html => { :class => "ui form attached fluid segment" } do |f| %>
 
@@ -66,14 +65,14 @@
 
                     <div class="inline fields">
                       <div class="field">
-                        <div class="ui radio checkbox">
+                        <div class="ui toggle checkbox">
                           <%= f.check_box :complete_docs %>
                           <label>Complete Docs</label>
                         </div>
                       </div>
 
                       <div class="field">
-                        <div class="ui radio checkbox">
+                        <div class="ui toggle checkbox">
                           <%= f.check_box :pending %>
                           <label>Pending</label>
                         </div>
@@ -123,7 +122,8 @@
       <% end %>
 
       </div>
-    </div><!-- 16 column -->
+    </div><!-- 12 column -->
+    <div class="two wide column"></div>
 </div><!-- grid -->
 
 
