@@ -1,7 +1,7 @@
 class TrackingFormsController < ApplicationController
 
   before_action :authenticate_employee!
-  
+
   def show
     @tracking_form = TrackingForm.find(params[:id])
     @history = @tracking_form.form_histories.order(:created_at)
@@ -49,17 +49,15 @@ class TrackingFormsController < ApplicationController
   end
 
   def delete
+    verify_if_admin
      @tracking_form = TrackingForm.find(params[:id])
   end
 
   def destroy
+    verify_if_admin
   	@tracking_form = TrackingForm.find(params[:id]).destroy
     flash[:notice] = "Form deleted successfully!"
-    if current_employee.admin
-      redirect_to admin_index_path
-    else
-      redirect_to root_url
-    end
+    redirect_to admin_index_path
   end
 
   def for_forwarding
@@ -118,7 +116,7 @@ class TrackingFormsController < ApplicationController
         flash[:notice] = "Please make the necessary changes"
         render('for_return')
       end # logical condition IF tracking_form.changed?
-  end # end returning
+  end # end returning-
 
   def add_remark
     @tracking_form = TrackingForm.find(params[:id])
@@ -172,5 +170,13 @@ class TrackingFormsController < ApplicationController
                                           :pending,
                                           :pending_information)
   end
+
+  def verify_if_admin
+    authenticate_employee!
+    if !current_employee.admin
+       redirect_to root_url
+    end
+  end
+
   
 end
