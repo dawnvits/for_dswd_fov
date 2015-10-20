@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'account_information/index'
   get 'search/index'
   get 'search/result'
+  get 'search/view/:uid', to: 'search#view', as: 'view_tracking_form'
 
   resources :employees do
     collection do
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
   resources :tracking_forms, only: [:show, :new, :create, :edit, :update, :destroy]  do
     member do
       get 'delete'
+      get 'finishing_remarks'
       get 'for_forwarding'
       patch 'forwarding'  
       put 'forwarding'
@@ -33,6 +35,9 @@ Rails.application.routes.draw do
       put 'returning' 
       patch 'receive'  
       put 'receive' 
+      patch 'decline'  
+      put 'decline'
+      post 'finished'  
     end
     collection do
       get 'forwarded_forms'

@@ -1,4 +1,4 @@
-<% if @tracking_form.blank? %>
+<% if @tracking_forms.blank? %>
 		<div class="ui hidden divider"></div>
 
 		<center>
@@ -8,7 +8,7 @@
 			</h2>
 			<%= form_tag(search_result_path, :method => "get" ,:class => 'ui form') do %>
 			<div class="inline field" data-sr='ease-in-out'>
-				<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Number" %>
+				<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Name" %>
 				<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
 			</div>
 			<% end %>
@@ -32,218 +32,78 @@
 	</h2>
 	<%= form_tag(search_result_path, :method => "get" ,:class => 'ui form') do %>
 	<div class="inline field">
-		<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Number" %>
+		<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Name" %>
 		<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
 	</div>
 	<% end %>
 
 </center>
 
-<div class="ui center aligned page grid">
-    <div class="sixteen wide column">
+<div class="ui center aligned grid">
+	<div class="one wide column"></div>
+    <div class="fourteen wide column">
 
 	    <div class="dividing header"></div>
 
-		<div class="ui tall stacked segment">
+		<table class="ui very compact blue table">
+			  <thead data-sr='ease-in-out'>
+			    <tr>
+			  
+			      <th class="four wide">Department</th>
+			      <th class="eight wide">Transaction Name</th>
+			      <th class="two wide center aligned">Status</th>
+			      <th class="two wide center aligned">Transaction Age</th>
+			      
+			    </tr>
+			  </thead>
+		  	  <tbody>
 
-			  	<div class="ui page grid">
+			 <% @tracking_forms.each do |tracking_form| %>
+			 <tr data-sr='ease-in-out'>
 
-			  			<div class="eight wide column">
-			  				<div class="ui hidden divider"></div>
+			 	<td>
+			 		<%= tracking_form.current_dept %>
+			 	</td>
 
-							<h2 class="ui icon header center aligned" data-sr='ease-in'>
-							  <i class="file text outline icon"></i>
-							  <div class="content">
-							    Form Information
-							  </div>
-							  <% if employee_signed_in? %>
-							  	<% if @tracking_form.current_dept == current_employee.department || current_employee.admin %>
-							  		<%= link_to('Manage Form', edit_tracking_form_path(@tracking_form.id), :class => 'ui button', :'data-sr' => 'ease-in') %>
-							  	<% end %>
-							  <% end %>
-							</h2>
+			  	<td> 
+			  		<%= link_to(tracking_form.transaction_name, view_tracking_form_path(tracking_form.uid), :class => "ui basic blue button") %>	
+			 	</td>
 
-							<div class="ui hidden divider"></div>
-							
-							<div class="ui relaxed list">	
+			 	<td class="center aligned">
+			 		<% if tracking_form.finished %>
+			 				Finished
+			 		<% elsif tracking_form.received %>
+			 				Received by <%= tracking_form.receiver %> 
+			 		<% elsif tracking_form.pending && tracking_form.returned %>
+							Returned and Pending
+					<% elsif tracking_form.pending %>
+							Pending
+					<% elsif tracking_form.complete_docs %>
+							Complete Docs
+					<% else %>
+							Incomplete Docs
+					<% end %>
+			 	</td>
 
-							  <div class="item" data-sr='ease-in'>   
-							    <div class="content">
-							      <div class="header">Transaction Age </div>
-							      <div class="description"><em>created <%= time_ago_in_words(@tracking_form.created_at) %> ago</em></div>
-							    </div>
-							  </div>
+			    <td class="hv center aligned" data-content="<%= tracking_form.created_at.strftime('%B %d, %Y at %I: %M %p') %>" data-variation="wide large">
+			 		<em>Created <%= time_ago_in_words(tracking_form.created_at) %> ago</em>
+			 	</td>
+			 	<% end %>
+			 </tr>
 
-							  <div class="item" data-sr='ease-in'>   
-							    <div class="content">
-							      <div class="header"> Transaction Number </div>
-							      <div class="description"><%= @tracking_form.id %></div>
-							    </div>
-							  </div>
-			
-							  <div class="item" data-sr='ease-in'>   
-							    <div class="content">
-							      <div class="header">Transaction Name:</div>
-							      <div class="description"><%= @tracking_form.transaction_name %></div>
-							    </div>
-							  </div>
+		  	 </tbody>
+		</table>
+    	
 
-							  <div class="item" data-sr='ease-in'>   
-							    <div class="content">
-							      <div class="header"> <%= @tracking_form.transaction_type %> Date of Filing: </div>
-							      <div class="description"><%= @tracking_form.date_filed.strftime('%B %d, %Y') %></div>
-							    </div>
-							  </div>
-
-							  <% if @tracking_form.amount != 0 %>
-							  	<div class="item" data-sr='ease-in'>   
-								    <div class="content">
-								      <div class="header">Amount:</div>
-								      <div class="description"> <%= number_with_precision(@tracking_form.amount, precision: 2) %></div>
-								    </div>
-								</div>
-							  <% end %>
-
-							  <div class="item" data-sr='ease-in'>   
-							    <div class="content">
-							      <div class="header">Prepared by:</div>
-							      <div class="description"><%= @tracking_form.prepared_by %> of <%= @tracking_form.department%></div>
-							    </div>
-							  </div>
-
-							  <div class="item" data-sr='ease-in'>   
-							    <div class="content">
-							    	<div class="header">Status:</div>
-							     	<% if @tracking_form.pending && @tracking_form.returned %>
-									    <div class="description">Returned and Pending</div>
-									   	<div class="ui compact teal message">
-										  <div class="content">
-										    <div class="header">
-										       Pending due to:
-										    </div>
-										    <p><%= @tracking_form.pending_information %></p>
-										  </div>
-										</div>
-									    <div class="ui compact teal message">
-										  <div class="content">
-										    <div class="header">
-										       Returned due to:
-										    </div>
-										    <p> <%= @tracking_form.return_notice %></p>
-										  </div>
-										</div>
-									<% elsif @tracking_form.pending %>
-									    <div class="description">Pending at <%= @tracking_form.current_dept %></div>
-										<div class="ui compact teal message">
-										  <div class="content">
-										    <div class="header">
-										       Pending due to:
-										    </div>
-										    <p><%= @tracking_form.pending_information %></p>
-										  </div>
-										</div>
-									<% elsif @tracking_form.returned %>
-									    <div class="description">Returned to <%= @tracking_form.current_dept %></div>
-									    <div class="ui compact teal message">
-										  <div class="content">
-										    <div class="header">
-										       Returned due to:
-										    </div>
-										    <p> <%= @tracking_form.return_notice %></p>
-										  </div>
-										</div>
-									<% elsif @tracking_form.complete_docs %>
-									    <div class="description">Complete Docs</div>
-									<% else %>
-										<div class="description">Incomplete Docs</div>
-									<% end %>
-					
-							    </div>
-							  </div>
-							  
-							</div><!-- ui list -->
-							
-							<div class="ui hidden divider"></div>
-
-							
-							<h2 class="ui icon header center aligned" data-sr='ease-in'>
-							  
-							  <i class="comments outline icon"></i>
-							  <div class="content">
-							    Remarks
-							  </div>
-							   <% if employee_signed_in? %>
-							  	<% if @tracking_form.current_dept == current_employee.department || current_employee.admin %>
-							  		 <%= link_to('Add Remark', add_remark_tracking_form_path(@tracking_form.id), :class => 'ui button') %>
-							  	<% end %>
-							  <% end %>
-							</h2>
-							
-							<% if !@remark.empty? %>
-							<div class="ui relaxed divided list">
-								<% @remark.each do |remark| %>
-								  <div class="item" data-sr='ease-in'>   
-								    <div class="content">
-								      <div class="description">
-								      		<%= remark.content %>
-								      		<small>
-								      			<em>added on <%= remark.created_at.strftime('%B %d, %Y at %I: %M %p') %></em>
-								      		</small> 
-								      </div>
-								    </div>
-								  </div>
-								<% end %>
-							</div>
-							<% else %>
-								<div class="description">
-									<em>There are no remarks for this transaction</em>
-								</div>
-							<% end %>
-										
-			  			</div><!-- eight column -->
-
-			  			<div class="eight wide column">
-
-			  				<div class="ui hidden divider"></div>
-			  				
-			  				<h2 class="ui icon header center aligned" data-sr='ease-in'>
-							  <i class="calendar outline icon"></i>
-							  <div class="content">
-							    History
-							  </div>
-							</h2>
-
-							<div class="ui feed">
-								<% @history.each do |history| %>
-								  <div class="event">
-								    <div class="label">
-								      <i class="teal wait icon"></i>
-								    </div>
-								    <div class="content">
-								      <div class="summary">
-								      	<%= history.description %>
-								      </div>
-								    </div>
-								  </div>
-								<% end %>
-							</div><!-- feed -->
-
-							<div class="ui relaxed list">
-								<div class="item" data-sr='ease-in'>   
-								    <div class="content">
-								      <div class="header"> Current Department of Transaction</div>
-								      <div class="description"><em><%= @tracking_form.current_dept %></em></div>
-								    </div>
-							    </div>
-							</div>
-
-			  			</div><!-- eight column -->
-				    
-				</div><!-- ui grid -->
-				<div class="ui hidden divider"></div>
-
-		</div><!-- ui segment -->
-
-    </div><!-- 16 column -->
+    </div><!-- 14 column -->
+    <div class="one wide column"></div>
 </div><!-- grid -->
+
+<div class="ui page grid">
+
+    <div class="sixteen wide column center aligned">
+    	<%= will_paginate @tracking_forms,  :previous_label => '<i class="arrow circle left icon"></i>Prev', :next_label => 'Next <i class="arrow circle right icon"></i>', :'data-sr' => 'ease-in-out' %>
+    </div><!-- 16 column -->
+
+</div><!-- grid -->	
 <% end %>

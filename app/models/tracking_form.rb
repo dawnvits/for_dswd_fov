@@ -21,7 +21,7 @@ class TrackingForm < ActiveRecord::Base
   scope :pending, lambda { where(:pending => true) }
 
   def self.search(query)
-    where("id = ?", "#{query}") 
+    where("transaction_name LIKE ?", "%#{query}%") 
   end
   
   protected

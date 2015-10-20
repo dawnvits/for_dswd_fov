@@ -75,7 +75,7 @@ class EmployeesController < ApplicationController
     end
 
     def edit_employee_params
-      params.require(:employee).permit(:active, :admin)
+      params.require(:employee).permit(:active, :admin, :transaction_admin)
     end
 
 

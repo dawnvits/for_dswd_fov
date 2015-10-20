@@ -20,8 +20,9 @@
     	<table class="ui very compact striped blue table" data-sr='ease-in-out'>
 		  <thead>
 		    <tr>
-		      <th class="four wide">Name</th>
-		      <th class="four wide">Email</th>
+		      <th class="three wide">Name</th>
+		      <th class="three wide">Email</th>
+		      <th class="two wide center aligned">Transaction Admin</th>
 		      <th class="two wide center aligned">Active</th>
 		      <th class="two wide center aligned">Administrator</th>
 		      <th class="four wide center aligned"></th>
@@ -32,6 +33,12 @@
 		    <tr>
 		      <td><%= employee.last_name %>, <%= employee.first_name %> <%= employee.middle_name %> </td>
 		      <td><%= employee.email %></td>
+
+		      	  <% if employee.transaction_admin? %>
+			      	<td class="center aligned"><i class="active green checkmark icon"></i></td>
+			      <% else %>
+			      	<td class="center aligned"><i class="active red remove icon"></i></td>
+			      <% end %>
 
 			      <% if employee.active? %>
 			      	<td class="center aligned"><i class="active green checkmark icon"></i></td>

@@ -1,0 +1,38 @@
+<div class="ui page grid">
+
+    <div class="ui two column center aligned grid">
+  		<div class="column left aligned" data-sr='scale up 20%'>
+
+  			<div class="ui hidden divider">
+
+  			</div>
+
+			<%= form_for @remark, :url => finished_tracking_form_path, :html => { :class => "ui form attached fluid segment" } do |f| %>
+
+				<h2 class="ui center aligned icon header">
+					<i class="comments outline icon"></i>
+					Add Finishing Remark
+				</h2>
+				
+				<div class="field">
+			     
+			        	<%= f.text_area :content %>  
+			            
+			    </div>
+
+			    <div class="two fields">
+		            <div class="field">
+		              <%= f.submit "Add Finishing Remark", :class => 'ui fluid blue button' %> 
+		            </div>
+		            
+		            <div class="field">
+		              <%= link_to('Back', :back, :class => 'ui fluid button')  %>
+		            </div>
+	          	</div>
+
+			<% end %>
+
+		</div>
+	</div>
+
+</div><!-- grid -->

@@ -18,23 +18,32 @@
 
           <div class="two fields">
           	<div class="field">
-          		<div class="ui toggle checkbox">
-		      	<%= f.check_box :active %>
-		      	<label>Active</label>
-		    	</div>
+          		<div class="ui slider checkbox">
+    		      	<%= f.check_box :active %>
+    		      	<label>Active</label>
+    		    	</div>
           	</div>
 
           	<div class="field">
-          		<div class="ui toggle checkbox">
-			      <%= f.check_box :admin %>
-			      <label>Administrator</label>
-		    	</div>
+          		<div class="ui slider checkbox">
+    			      <%= f.check_box :admin %>
+    			      <label>Administrator</label>
+    		    	</div>
           	</div>
           </div>
 
           <div class="ui hidden divider"></div>
+
+          <div class="field">
+              <div class="ui slider checkbox">
+                <%= f.check_box :transaction_admin %>
+                <label>Transaction Admin</label>
+              </div>
+          </div>
+
+          <div class="ui hidden divider"></div>
       	  
-      	  <%= f.submit "Change Settings", :class => 'ui primary large button' %> 
+      	  <%= f.submit "Change Settings", :class => 'ui primary button' %> 
 
 	<% end %>
 

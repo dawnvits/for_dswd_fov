@@ -11,19 +11,12 @@
 
 				<h2 class="ui center aligned icon header">
 					<i class="purple arrow circle left icon"></i>
-					Return to
+					Return
 				</h2>
-				
-				<div class="field">
-			     	<label>Department</label>
-			        
-			        <%= f.collection_select :current_dept, Department.order(:name), :name, :name %>
-			            
-			    </div>
 
 			    <div class="field">
 			    	
-			    	<label>State reason for returning</label>
+			    	<label>Reason for returning</label>
 			    
 			        <%= f.text_area :return_notice %>
 			            

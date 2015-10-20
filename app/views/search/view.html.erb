@@ -1,3 +1,18 @@
+<div class="ui hidden divider"></div>
+<center>
+
+	<h2 class="ui center aligned icon header" data-sr='ease-in-out'>
+	  <i class="circular search icon"></i>
+	</h2>
+	<%= form_tag(search_result_path, :method => "get" ,:class => 'ui form') do %>
+		<div class="inline field" data-sr='ease-in-out'>
+			<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Name" %>
+			<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
+		</div>
+	<% end %>
+
+</center>
+
 <div class="ui page grid center aligned">
     <div class="sixteen wide column">
 
@@ -6,7 +21,7 @@
 		<div class="ui tall stacked segment">
 
 			  	<div class="ui page grid">
-
+			  			
 			  			<div class="eight wide column">
 			  				<div class="ui hidden divider"></div>
 
@@ -15,16 +30,6 @@
 							  <div class="content">
 							    Form Information
 							  </div>
-							  <% if !@tracking_form.finished %>
-							  	<% if @tracking_form.current_dept == current_employee.department || current_employee.admin %>
-							  		<%= link_to('Manage Form', edit_tracking_form_path(@tracking_form.id), :class => 'ui button', :'data-sr' => 'ease-in') %>
-							  	<% end %>
-
-							  	<% if @tracking_form.current_dept === current_employee.department && !@tracking_form.received && @tracking_form.forwarded || 
-						 			  @tracking_form.current_dept === current_employee.department && !@tracking_form.received && @tracking_form.returned %>
-						 			<%= link_to('Receive this form', receive_tracking_form_path(@tracking_form.id), :method => :put, :class => 'ui primary button') %>
-						 		<% end %>
-						 	  <% end %>
 							</h2>
 
 							<div class="ui hidden divider"></div>
@@ -71,7 +76,7 @@
 							  <div class="item" data-sr='ease-in'>   
 							    <div class="content">
 							    	<div class="header">Status:</div>
-							    	<% if @tracking_form.finished %>
+							     	<% if @tracking_form.finished %>
 							    		<div class="description">Finished</div>
 							     	<% elsif @tracking_form.pending && @tracking_form.returned %>
 									    <div class="description">Returned and Pending</div>
@@ -122,38 +127,36 @@
 							</div><!-- ui list -->
 							<div class="ui hidden divider"></div>
 
-							<h2 class="ui icon header center aligned" data-sr='ease-in'>
-							  <i class="comments outline icon"></i>
-							  <div class="content">
-							    Remarks
-							  </div>
-							  <% if !@tracking_form.finished %>
-								  <% if @tracking_form.current_dept == current_employee.department || current_employee.admin %>
-								  		<%= link_to('Add Remark', add_remark_tracking_form_path(@tracking_form.id), :class => 'ui button') %>
-								  <% end %>
-							  <% end %>
-							</h2>
-
-							<% if !@remark.empty? %>
-							<div class="ui relaxed divided list">
-								<% @remark.each do |remark| %>
-								  <div class="item" data-sr='ease-in'>   
-								    <div class="content">
-								      <div class="description">
-								      		<%= remark.content %>
-								      		<small>
-								      			<em>added on <%= remark.created_at.strftime('%B %d, %Y at %I: %M %p') %></em>
-								      		</small> 
-								      </div>
-								    </div>
+							<% if employee_signed_in? %>
+								<h2 class="ui icon header center aligned" data-sr='ease-in'>
+								  <i class="comments outline icon"></i>
+								  <div class="content">
+								    Remarks
 								  </div>
-								<% end %>
-							</div>
-							<% else %>
-								<div class="description" data-sr='ease-in'>
-									<em>There are no remarks for this transaction</em>
+
+								</h2>
+
+								<% if !@remark.empty? %>
+								<div class="ui relaxed divided list">
+									<% @remark.each do |remark| %>
+									  <div class="item" data-sr='ease-in'>   
+									    <div class="content">
+									      <div class="description">
+									      		<%= remark.content %>
+									      		<small>
+									      			<em>added on <%= remark.created_at.strftime('%B %d, %Y at %I: %M %p') %></em>
+									      		</small> 
+									      </div>
+									    </div>
+									  </div>
+									<% end %>
 								</div>
-							<% end %>					
+								<% else %>
+									<div class="description" data-sr='ease-in'>
+										<em>There are no remarks for this transaction</em>
+									</div>
+								<% end %>	
+							<% end %>				
 			  			</div><!-- eight column -->
 
 			  			<div class="eight wide column">
@@ -166,26 +169,49 @@
 							    History
 							  </div>
 							</h2>
-							<% if !@tracking_form.finished %>
-								<% if current_employee.transaction_admin? %>
-									<%= link_to('Declare as Finished', finishing_remarks_tracking_form_path(@tracking_form.id), :class => 'ui button', :'data-sr' => 'ease-in') %>
-								<% end %>
-							<% end %>
+							
 							<div class="ui feed">
-								<% @history.each do |history| %>
-									<div class="event">
-										<div class="label">
-											<i class="teal wait icon"></i>
-										</div>
-										<div class="content">
-											<div class="summary">
-											<%= history.description %>
-											</div>
-										</div>
-									</div>
+								<% if !employee_signed_in? %>
+									  <div class="event">
+									    <div class="label">
+									      <i class="teal wait icon"></i>
+									    </div>
+									    <div class="content">
+									      <div class="summary">
+									      	<%= @first_history.description %>
+									      </div>
+									    </div>
+									  </div>
+
+									   <div class="event">
+									    <div class="label">
+									      <i class="teal wait icon"></i>
+									    </div>
+									    <div class="content">
+									      <div class="summary">
+									      	<%= @last_history.description %>
+									      </div>
+									    </div>
+									  </div>
+								<% else %>
+						    
+									<% @history.each do |history| %>
+									  <div class="event">
+									    <div class="label">
+									      <i class="teal wait icon"></i>
+									    </div>
+									    <div class="content">
+									      <div class="summary">
+									      	<%= history.description %>
+									      </div>
+									    </div>
+									  </div>
+									<% end %>
+
 								<% end %>
 								
 							</div><!-- feed -->
+
 							<% if !@tracking_form.finished %>
 							<div class="ui relaxed list">
 								<div class="item" data-sr='ease-in'>   
@@ -196,7 +222,6 @@
 							    </div>
 							</div>
 							<% end %>
-
 			  			</div><!-- eight column -->
 				    
 				</div><!-- ui grid -->
@@ -206,3 +231,4 @@
 
     </div><!-- 16 column -->
 </div><!-- grid -->
+

@@ -5,10 +5,10 @@
 	  <i class="circular search icon"></i>
 	</h2>
 	<%= form_tag(search_result_path, :method => "get" ,:class => 'ui form') do %>
-	<div class="inline field" data-sr='ease-in-out'>
-		<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Number" %>
-		<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
-	</div>
+		<div class="inline field" data-sr='ease-in-out'>
+			<%= text_field_tag :search, params[:search], placeholder: "Enter Transaction Name" %>
+			<%= submit_tag "Search", :name => nil, :class => 'ui primary button' %>
+		</div>
 	<% end %>
 
 </center>

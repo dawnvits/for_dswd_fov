@@ -72,7 +72,8 @@ class TrackingFormsController < ApplicationController
         @tracking_form.update(:recently_created => 'false',
                               :forwarded => 'true',
                               :received => 'false',
-                              :returned => 'false')
+                              :returned => 'false',
+                              :prev_dept => current_employee.department)
          if @tracking_form.save
             @tracking_form.form_histories.create(description: "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name} forwarded this form to #{@tracking_form.current_dept} on #{Time.now.strftime('%B %d, %Y at %I: %M %p')}.")
             flash[:notice] = "Form is forwarded successfully!"
@@ -92,35 +93,64 @@ class TrackingFormsController < ApplicationController
   end
 
   def returning
-     @tracking_form = TrackingForm.find(params[:id])
-     @tracking_form.assign_attributes(params.require(:tracking_form).permit(:current_dept, :return_notice))
+    @tracking_form = TrackingForm.find(params[:id]) 
+    prev_department = @tracking_form.prev_dept
+    current_department = @tracking_form.current_dept
+    @tracking_form.update_attributes(params.require(:tracking_form).permit(:return_notice))                            
+    if @tracking_form.save
+      @tracking_form.form_histories.create(description: "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name} returned this form to #{prev_department} on #{Time.now.strftime('%B %d, %Y at %I: %M %p')}.")
+      @tracking_form.update_attributes(:received => 'false', 
+                                     :recently_created => 'false',
+                                     :forwarded => 'false',
+                                     :returned => 'true',
+                                     :current_dept => prev_department,
+                                     :prev_dept => current_department)
+      flash[:notice] = "Form is returned successfully!"
+      redirect_to root_url
+    else
+      render('for_return')
+    end
+  end
 
-     if @tracking_form.changed?
-         if @tracking_form.current_dept != current_employee.department
-            @tracking_form.update(:recently_created => 'false',
-                                  :forwarded => 'false',
-                                  :received => 'false',
-                                  :returned => 'true')
-             if @tracking_form.save
-                @tracking_form.form_histories.create(description: "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name} returned this form to #{@tracking_form.current_dept} on #{Time.now.strftime('%B %d, %Y at %I: %M %p')}.")
-                flash[:notice] = "Form is returned successfully!"
-                redirect_to root_url
-             else
-                render('for_return')
-             end # logical condition IF tracking_form.save
-         else
-            flash[:notice] = "Form cannot be returned to same department!"
-            redirect_to tracking_form_url(@tracking_form.id)
-         end # logical condition IF tracking_form.current_dept != current_employee.department
-      else 
-        flash[:notice] = "Please make the necessary changes"
-        render('for_return')
-      end # logical condition IF tracking_form.changed?
-  end # end returning-
+  def decline
+    @tracking_form = TrackingForm.find(params[:id])
+    prev_department = @tracking_form.prev_dept
+    current_department = @tracking_form.current_dept
+    @tracking_form.update_attributes(:received => 'false', 
+                                     :recently_created => 'false',
+                                     :forwarded => 'false',
+                                     :current_dept => prev_department,
+                                     :prev_dept => current_department,
+                                     :receiver => "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name}")
+    @tracking_form.form_histories.create(description: "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name} of #{current_employee.department} declined to receive this form on #{Time.now.strftime('%B %d, %Y at %I: %M %p')}")
+    flash[:notice] = "You have declined to receive the form"
+    redirect_to root_url
+  end
 
   def add_remark
     @tracking_form = TrackingForm.find(params[:id])
     @remark = @tracking_form.form_remarks.new
+  end
+
+  def finishing_remarks
+    @tracking_form = TrackingForm.find(params[:id])
+    @remark = @tracking_form.form_remarks.new
+  end
+
+  def finished
+    if !current_employee.transaction_admin?
+      redirect_to root_url
+    end
+    @tracking_form = TrackingForm.find(params[:id])
+    @remark = @tracking_form.form_remarks.new(params.require(:form_remark).permit(:tracking_form_id, :content))
+    if @remark.save
+       @tracking_form.form_histories.create(description: "#{current_employee.first_name} #{current_employee.middle_name} #{current_employee.last_name} declared this transaction finished on #{Time.now.strftime('%B %d, %Y at %I: %M %p')}.")
+       @tracking_form.update_attributes(:finished => 'true')
+       flash[:notice] = "Transaction is declared as finished!"
+       redirect_to tracking_form_url(@tracking_form.id)
+    else
+       render('finishing_remarks')
+    end
   end
 
   def adding_remark

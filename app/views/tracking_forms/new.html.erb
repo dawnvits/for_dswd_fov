@@ -31,7 +31,7 @@
 
               <div class="field">
                 <label>Type of Transaction</label>
-                <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal'], :prompt => 'Select Transaction Type' %>
+                <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal', 'Other Transaction'], :prompt => 'Select Transaction Type' %>
               </div>
 
           </div>
@@ -49,7 +49,7 @@
               </div>
 
               <div class="field">
-                <label>Department</label>
+                <label>Division | Section | Unit</label>
                     <%= f.collection_select :department, Department.order(:name), :name, :name, :prompt => "Select Department" %> 
               </div>
 

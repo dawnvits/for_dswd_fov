@@ -31,7 +31,7 @@
 
                 <div class="field" data-sr='ease-in-out'>
                   <label>Type of Transaction</label>
-                  <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal'], :selected => f.object.transaction_type %>
+                  <%= f.select :transaction_type, ['Reimbursement of Travel Expense','Salary', 'Payment for Creditor', 'Activity Proposal', 'Other Transaction'], :selected => f.object.transaction_type %>
                 </div>
               </div>
 
@@ -47,7 +47,7 @@
                   </div>
 
                   <div class="field">
-                    <label>Department</label>
+                    <label>Division | Section | Unit</label>
                     <%= f.collection_select :department, Department.order(:name), :name, :name, {:prompt => @select_value, :selected => @tracking_form.department} %>
                   </div>
               </div>    
@@ -87,6 +87,7 @@
               <label>State reason for pending</label>
               <%= f.text_area :pending_information, autocomplete: "off", :placeholder => "Enter Pending Information" %>
           </div>  
+        <% if !@tracking_form.finished %>
         
           <div class="two fields" data-sr='ease-in-out'>
             <div class="field">
@@ -97,30 +98,29 @@
               <%= link_to('Cancel', :back, :class => 'ui fluid button')  %>
             </div>
           </div>
-
-          <% if !@tracking_form.pending && @tracking_form.current_dept == current_employee.department && !@tracking_form.forwarded && !@tracking_form.returned %>
-            <div class="field" data-sr='ease-in-out'>
-              <%= link_to('<i class="send icon"></i> Forward'.html_safe, 
-                   for_forwarding_tracking_form_path(@tracking_form.id), 
-                   :class => 'fluid ui green button') %>
-            </div>
           
-              <% if @tracking_form.origination_dept != current_employee.department && @tracking_form.received %>
-                <div class="ui horizontal divider">
-                  Or
-                </div>
-
+              <% if !@tracking_form.pending && @tracking_form.current_dept == current_employee.department && !@tracking_form.forwarded && !@tracking_form.returned %>
                 <div class="field" data-sr='ease-in-out'>
-                  <%= link_to('<i class="arrow circle left icon"></i> Return'.html_safe, 
-                       for_return_tracking_form_path(@tracking_form.id), 
-                       :class => 'fluid ui purple button') %>
+                  <%= link_to('<i class="send icon"></i> Forward'.html_safe, 
+                       for_forwarding_tracking_form_path(@tracking_form.id), 
+                       :class => 'fluid ui green button') %>
                 </div>
-              <% end %>
+          
+                <% if @tracking_form.origination_dept != current_employee.department && @tracking_form.received %>
+                  <div class="ui horizontal divider">
+                    Or
+                  </div>
 
+                  <div class="field" data-sr='ease-in-out'>
+                    <%= link_to('<i class="arrow circle left icon"></i> Return'.html_safe, 
+                         for_return_tracking_form_path(@tracking_form.id), 
+                         :class => 'fluid ui purple button') %>
+                  </div>
+                <% end %>
+              <% end %>
           <% end %>
 
       <% end %>
-
       </div>
     </div><!-- 12 column -->
     <div class="two wide column"></div>

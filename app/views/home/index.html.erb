@@ -14,7 +14,7 @@
 			    <div class="sub header">Sorry. We didnt found any forms for your department.</div>
 			  </div>
 			</h2>
-
+			
 	<% else %>
 			
 		  <table class="ui very compact blue table">
@@ -67,6 +67,7 @@
 			 		<% if tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.forwarded || 
 			 			  tracking_form.current_dept === current_employee.department && !tracking_form.received && tracking_form.returned %>
 			 			<%= link_to('Receive', receive_tracking_form_path(tracking_form.id), :method => :put, :class => 'ui mini primary button') %>
+			 			<%= link_to('Decline', decline_tracking_form_path(tracking_form.id), :method => :put, :class => 'ui mini red button') %>
 			 		<% end %>
 
 			 	</td>

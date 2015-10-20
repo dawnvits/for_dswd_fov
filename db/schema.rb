@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903115752) do
+ActiveRecord::Schema.define(version: 20151020073548) do
 
   create_table "departments", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20150903115752) do
     t.string   "last_sign_in_ip",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "transaction_admin",              default: false
   end
 
   add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
@@ -78,6 +79,8 @@ ActiveRecord::Schema.define(version: 20150903115752) do
     t.boolean  "received",                          default: false
     t.string   "receiver",            limit: 255,   default: ""
     t.boolean  "pending",                           default: false
+    t.string   "prev_dept",           limit: 255,   default: ""
+    t.boolean  "finished",                          default: false
   end
 
 end
