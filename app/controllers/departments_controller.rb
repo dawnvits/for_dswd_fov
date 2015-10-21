@@ -28,12 +28,13 @@ class DepartmentsController < ApplicationController
 
   def update
     @department = Department.find(params[:id])
-    prev_dept = @department.name
+    previous_dept = @department.name
     if @department.update_attributes(params.require(:department).permit(:name))
       if @department.save
-        Employee.where(department: prev_dept).update_all(department: @department.name)
-        TrackingForm.where(current_dept: prev_dept).update_all(current_dept: @department.name)
-        TrackingForm.where(origination_dept: prev_dept).update_all(origination_dept: @department.name)
+        Employee.where(department: previous_dept).update_all(department: @department.name)
+        TrackingForm.where(current_dept: previous_dept).update_all(current_dept: @department.name)
+        TrackingForm.where(origination_dept: previous_dept).update_all(origination_dept: @department.name)
+        TrackingForm.where(prev_dept: previous_dept).update_all(prev_dept: @department.name)
         flash[:notice] = "Department updated successfully!"
         redirect_to departments_path
       else
